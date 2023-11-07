@@ -14,17 +14,17 @@ const menuItems = [
   {
     name: "Events",
     icon: <CampaignIcon />,
-    path: "/events"
+    path: "events"
   },
   {
     name: "Speakers",
     icon: <GroupIcon />,
-    path: "/speakers"
+    path: "speakers"
   },
   {
     name: "Moderators",
     icon: <InterpreterModeIcon />,
-    path: "/moderators"
+    path: "moderators"
   },
 ];
 
