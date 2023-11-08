@@ -1,15 +1,15 @@
-import * as React from 'react';
-import Menu from '@/components/root/menu';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import * as React from 'react';
+
+import Menu from '@/components/root/menu';
+import Toolbar from '@/components/root/toolbar';
+
 import styles from './index.module.css';
 const drawerWidth = 240;
 
@@ -120,20 +120,7 @@ export default function PersistentDrawerLeft({open = false, setOpen, children}: 
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Events and feedbacks
-          </Typography>
-        </Toolbar>
+        <Toolbar handleDrawerOpen={handleDrawerOpen} open={open} />
       </AppBar>
       <Drawer
         sx={{
