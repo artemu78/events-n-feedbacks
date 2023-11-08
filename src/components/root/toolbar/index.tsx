@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 interface ToolbarCustomProps {
   open: boolean;
@@ -26,8 +27,16 @@ const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
       <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
         Events and feedbacks
       </Typography>
-      <Button color="inherit" startIcon={<LoginIcon />} sx={{mr: 2}}>Sign In</Button>
-      <Button color="inherit" startIcon={<PersonAddIcon />}>Sign Up</Button>
+      <Link href="signin" passHref>
+        <Button color="inherit" startIcon={<LoginIcon />} sx={{ mr: 2 }}>
+          Sign In
+        </Button>
+      </Link>
+      <Link href="signup" passHref>
+        <Button color="inherit" startIcon={<PersonAddIcon />}>
+          Sign Up
+        </Button>
+      </Link>
     </Toolbar>
   );
 };
