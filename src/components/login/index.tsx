@@ -18,8 +18,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { signInWithGoogle } from "@/services/firebaseservice";
-import { AppDispatch } from '@/store';
+import {
+  signInWithFacebook,
+  signInWithGoogle,
+  signInWithTwitter
+} from "@/services/firebaseservice";
+import { AppDispatch } from "@/store";
 import { clearUser, setUser } from "@/store/userslice";
 
 interface LoginProps {
@@ -31,8 +35,8 @@ const Login = ({ title }: LoginProps) => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
-  const handleGoogleClick = async () => {
-    const { user, error } = await signInWithGoogle();
+  const handleAuthClick = (authFunction: typeof signInWithFacebook ) => async () => {
+    const { user, error } = await authFunction();
     if (user) {
       dispatch(
         setUser({
@@ -87,7 +91,7 @@ const Login = ({ title }: LoginProps) => {
             color="inherit"
             startIcon={<GoogleIcon />}
             sx={{ py: 2 }}
-            onClick={handleGoogleClick}
+            onClick={handleAuthClick(signInWithGoogle)}
           >
             Google
           </Button>
@@ -95,7 +99,7 @@ const Login = ({ title }: LoginProps) => {
             color="inherit"
             startIcon={<FacebookIcon />}
             sx={{ py: 2 }}
-            disabled
+            onClick={handleAuthClick(signInWithFacebook)}
           >
             Facebook
           </Button>
@@ -103,7 +107,7 @@ const Login = ({ title }: LoginProps) => {
             color="inherit"
             startIcon={<TwitterIcon />}
             sx={{ py: 2 }}
-            disabled
+            onClick={handleAuthClick(signInWithTwitter)}
           >
             Twitter
           </Button>
@@ -111,8 +115,8 @@ const Login = ({ title }: LoginProps) => {
       </DialogContent>
       {error && (
         <Alert variant="outlined" severity="error">
-        {error}
-      </Alert>
+          {error}
+        </Alert>
       )}
     </Dialog>
   );

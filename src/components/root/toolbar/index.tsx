@@ -14,14 +14,20 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
 
+import { logout } from '@/services/firebaseservice';
 import { RootState } from "@/store";
+import { clearUser } from '@/store/userslice';
 import { User, UserState } from "@/types";
 interface ToolbarCustomProps {
   open: boolean;
   handleDrawerOpen: () => void;
 }
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+const settings = [{label: "Logout", id: "logout"}];
+type ISettingsIds = (typeof settings[number])['id'];
+
 const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
   const user = useSelector((state: RootState) => state.user.user);
   return (
@@ -61,13 +67,18 @@ interface UserAvatarProps {
 }
 
 const UserAvatar = ({ user }: UserAvatarProps) => {
+  const dispatch = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (menuItem: ISettingsIds) => async () => {
+    if (menuItem === "logout") {
+      await logout();
+      dispatch(clearUser());
+    }
     setAnchorElUser(null);
   };
 
@@ -98,8 +109,8 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu} disabled>
-            <Typography textAlign="center">{setting}</Typography>
+          <MenuItem key={setting.id} onClick={handleCloseUserMenu(setting.id)} >
+            <Typography textAlign="center">{setting.label}</Typography>
           </MenuItem>
         ))}
       </Menu>
