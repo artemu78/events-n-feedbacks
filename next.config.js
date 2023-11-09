@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
     output: "export",
-    assetPrefix: isProd ? 'https://artemu78.github.io/rsc' : undefined,
+    assetPrefix: isProd ? process.env.BASE_URL : undefined,
 }
 
 module.exports = nextConfig
