@@ -19,10 +19,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
+  registerUserLogin,
   signInWithFacebook,
   signInWithGoogle,
-  signInWithTwitter
-} from "@/services/firebaseservice";
+  signInWithTwitter} from "@/services/firebaseservice";
 import { AppDispatch } from "@/store";
 import { clearUser, setUser } from "@/store/userslice";
 
@@ -38,6 +38,7 @@ const Login = ({ title }: LoginProps) => {
   const handleAuthClick = (authFunction: typeof signInWithFacebook ) => async () => {
     const { user, error } = await authFunction();
     if (user) {
+      registerUserLogin(user);
       dispatch(
         setUser({
           uid: user.uid,

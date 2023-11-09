@@ -6,8 +6,11 @@ import {
   signOut,
   TwitterAuthProvider,
 } from "firebase/auth";
+import { get, ref, set, update } from "firebase/database";
 
-import { auth } from "./firebaseconfig";
+import { User } from "@/types";
+
+import { auth, db } from "./firebaseconfig";
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
@@ -123,6 +126,33 @@ export const logout = async () => {
     await signOut(auth);
   } catch (error) {
     console.error("Logout failed:", error);
+    throw error;
+  }
+};
+
+export const registerUserLogin = async (user: User) => {
+  try {
+    const {uid , displayName, email, photoURL} = user;
+    const userReference = ref(db, `users/${uid}}`);
+    const snapshot = await get(userReference);
+    if (snapshot.exists()) {
+      update(userReference, {
+        lastlogin: new Date().toISOString(),
+        displayName,
+        email,
+        photoURL,
+      });
+    } else {
+      set(userReference, {
+        lastlogin: new Date().toISOString(),
+        registerdate: new Date().toISOString(),
+        displayName,
+        email,
+        photoURL,
+      });
+    }
+  } catch (error) {
+    console.error("Register failed:", error);
     throw error;
   }
 };
