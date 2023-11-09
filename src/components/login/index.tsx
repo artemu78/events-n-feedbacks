@@ -6,29 +6,56 @@ import {
   Twitter as TwitterIcon,
 } from "@mui/icons-material";
 import {
+  Alert,
   Button,
   Dialog,
   DialogContent,
   DialogTitle,
   IconButton,
+  Stack,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import {  } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { auth } from "@/services/firebase-config";
+import { signInWithGoogle } from "@/services/firebaseservice";
+import { AppDispatch } from '@/store';
+import { clearUser, setUser } from "@/store/userslice";
 
 interface LoginProps {
   title: string;
 }
 
 const Login = ({ title }: LoginProps) => {
+  const [error, setError] = useState<string>("");
+  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+
+  const handleGoogleClick = async () => {
+    const { user, error } = await signInWithGoogle();
+    if (user) {
+      dispatch(
+        setUser({
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        })
+      );
+      router.back();
+    }
+    if (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <Dialog
       onClose={() => router.back()}
       aria-labelledby="customized-dialog-title"
       open={true}
+      maxWidth="xs"
+      fullWidth
     >
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
         {title}
@@ -46,16 +73,47 @@ const Login = ({ title }: LoginProps) => {
         <CloseIcon />
       </IconButton>
       <DialogContent dividers>
-        <Button color="inherit" fullWidth startIcon={<GoogleIcon />} sx={{ my: 2 }}>
-          Google
-        </Button>
-        <Button color="inherit" fullWidth startIcon={<FacebookIcon />} sx={{ my: 2 }}>
-          Facebook
-        </Button>
-        <Button color="inherit" fullWidth startIcon={<TwitterIcon />} sx={{ my: 2 }}>
-          Twitter
-        </Button>
+        <Stack
+          spacing={2}
+          sx={{
+            mb: 2,
+            margin: "auto",
+            alignItems: "start",
+            maxWidth: "fit-content",
+          }}
+          direction={"column"}
+        >
+          <Button
+            color="inherit"
+            startIcon={<GoogleIcon />}
+            sx={{ py: 2 }}
+            onClick={handleGoogleClick}
+          >
+            Google
+          </Button>
+          <Button
+            color="inherit"
+            startIcon={<FacebookIcon />}
+            sx={{ py: 2 }}
+            disabled
+          >
+            Facebook
+          </Button>
+          <Button
+            color="inherit"
+            startIcon={<TwitterIcon />}
+            sx={{ py: 2 }}
+            disabled
+          >
+            Twitter
+          </Button>
+        </Stack>
       </DialogContent>
+      {error && (
+        <Alert variant="outlined" severity="error">
+        {error}
+      </Alert>
+      )}
     </Dialog>
   );
 };

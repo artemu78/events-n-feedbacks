@@ -1,9 +1,11 @@
 "use client";
 import "./globals.css";
 
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
 
 import Main from "@/components/root";
+import store from "@/store";
 
 import styles from "./page.module.css";
 
@@ -23,9 +25,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <main className={styles.main}>
-          <Main open={open} setOpen={setOpen}>
-            {children}
-          </Main>
+          <Provider store={store}>
+            <Main open={open} setOpen={setOpen}>
+              {children}
+            </Main>
+          </Provider>
         </main>
       </body>
     </html>
