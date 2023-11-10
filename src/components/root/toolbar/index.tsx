@@ -14,19 +14,19 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
-import { logout } from '@/services/firebaseservice';
+import { logout } from "@/services/firebaseservice";
 import { RootState } from "@/store";
-import { clearUser } from '@/store/userslice';
+import { clearUser } from "@/store/userslice";
 import { User, UserState } from "@/types";
 interface ToolbarCustomProps {
   open: boolean;
   handleDrawerOpen: () => void;
 }
 
-const settings = [{label: "Logout", id: "logout"}];
-type ISettingsIds = (typeof settings[number])['id'];
+const settings = [{ label: "Logout", id: "logout" }];
+type ISettingsIds = (typeof settings)[number]["id"];
 
 const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -41,13 +41,15 @@ const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
       >
         <MenuIcon />
       </IconButton>
-      <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-        Events and feedbacks
-      </Typography>
+      <Link href="/" passHref>
+        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+          Events and feedbacks
+        </Typography>
+      </Link>
       {user ? (
         <UserAvatar user={user} />
       ) : (
-        <Link href="signin" passHref>
+        <Link href="/signin" passHref>
           <Button color="inherit" startIcon={<LoginIcon />} sx={{ mr: 2 }}>
             Sign In
           </Button>
@@ -109,7 +111,7 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting.id} onClick={handleCloseUserMenu(setting.id)} >
+          <MenuItem key={setting.id} onClick={handleCloseUserMenu(setting.id)}>
             <Typography textAlign="center">{setting.label}</Typography>
           </MenuItem>
         ))}

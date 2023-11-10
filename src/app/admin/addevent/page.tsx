@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  FormControl,
   InputLabel,
   TextField,
   Typography,
@@ -8,7 +9,7 @@ import {
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import React from "react";
 
-import { formSubmitAction } from './formaction';
+import { formSubmitAction } from "./formaction";
 
 const EventForm = () => {
   return (
@@ -29,6 +30,7 @@ const EventForm = () => {
         />
 
         <TextField
+          label="Address"
           id="address"
           variant="outlined"
           margin="normal"
@@ -36,21 +38,21 @@ const EventForm = () => {
           fullWidth
           name="address"
           type="text"
-          autoFocus
         />
 
-        <InputLabel htmlFor="eventDate">Event date</InputLabel>
-        <TextField
-          id="eventDate"
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          //   label="Event date"
-          name="eventDate"
-          type="date"
-          autoFocus
-        />
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel htmlFor="eventDate">Event date</InputLabel>
+          <TextField
+            id="eventDate"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            //   label="Event date"
+            name="eventDate"
+            type="date"
+          />
+        </FormControl>
 
         <Button
           type="submit"
