@@ -23,17 +23,17 @@ const menuItems = [
   {
     name: "Events",
     icon: <CampaignIcon />,
-    path: "events",
+    path: "/events",
   },
   {
     name: "Speakers",
     icon: <GroupIcon />,
-    path: "speakers",
+    path: "/speakers",
   },
   {
     name: "Moderators",
     icon: <InterpreterModeIcon />,
-    path: "moderators",
+    path: "/moderators",
   },
 ];
 
@@ -41,12 +41,12 @@ const adminMenuItems = [
   {
     name: "Add event",
     icon: <CampaignIcon />,
-    path: "admin/addevent",
+    path: "/admin/addevent",
   },
   {
     name: "Add speaker",
     icon: <GroupAddIcon />,
-    path: "admin/addspeaker",
+    path: "/admin/addspeaker",
   },
 ];
 
