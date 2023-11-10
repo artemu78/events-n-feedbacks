@@ -41,8 +41,8 @@ const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
       >
         <MenuIcon />
       </IconButton>
-      <Link href="/" passHref>
-        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+      <Link href="/" passHref style={{ flexGrow: 1 }}>
+        <Typography variant="h6" noWrap component="div">
           Events and feedbacks
         </Typography>
       </Link>
@@ -77,13 +77,14 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
   };
 
   const handleCloseUserMenu = (menuItem: ISettingsIds) => async () => {
+    console.log(handleCloseUserMenu);
     if (menuItem === "logout") {
       await logout();
       dispatch(clearUser());
     }
     setAnchorElUser(null);
   };
-
+  console.log("anchorElUser", anchorElUser);
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
@@ -108,7 +109,7 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
           horizontal: "right",
         }}
         open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
+        onClose={() => {setAnchorElUser(null)}}
       >
         {settings.map((setting) => (
           <MenuItem key={setting.id} onClick={handleCloseUserMenu(setting.id)}>

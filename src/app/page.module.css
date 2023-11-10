@@ -3,6 +3,12 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: 6rem 2rem;
   min-height: 100vh;
+}
+
+@media (min-width: 786px) {
+  .main {
+    padding: 6rem 6rem;
+  }
 }
