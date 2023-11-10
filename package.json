@@ -1,6 +1,6 @@
 {
   "name": "events-n-feedbacks",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "./",
   "private": true,
   "scripts": {
@@ -15,9 +15,11 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.16",
+    "@mui/x-date-pickers": "^6.18.1",
     "@reduxjs/toolkit": "^1.9.7",
     "firebase": "^10.5.2",
-    "next": "14.0.1",
+    "firebase-admin": "^11.11.0",
+    "next": "^14.0.1",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^8.1.3"
