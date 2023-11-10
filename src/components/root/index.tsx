@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
 
 import Menu from '@/components/root/menu';
-import Toolbar from '@/components/root/toolbar';
+import CustomToolbar from '@/components/root/toolbar';
 
 import styles from './index.module.css';
 const drawerWidth = 240;
@@ -120,7 +120,7 @@ export default function PersistentDrawerLeft({open = false, setOpen, children}: 
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar handleDrawerOpen={handleDrawerOpen} open={open} />
+        <CustomToolbar handleDrawerOpen={handleDrawerOpen} open={open} />
       </AppBar>
       <Drawer
         sx={{

@@ -1,23 +1,21 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, set } from "firebase/database";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCzlFxBcBvEve-9H5J_fG_-C3WrJOiwQ-0",
-  authDomain: "events-n-feedbacks.firebaseapp.com",
-  databaseURL: "https://events-n-feedbacks-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "events-n-feedbacks",
-  storageBucket: "events-n-feedbacks.appspot.com",
-  messagingSenderId: "835301874641",
-  appId: "1:835301874641:web:4daf0b0d71da09a4ec9ef0"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const apps = getApps();
+const app = !apps.length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 export const db = getDatabase(app);
 
