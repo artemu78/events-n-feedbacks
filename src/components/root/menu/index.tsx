@@ -18,6 +18,10 @@ import {
 import Collapse from "@mui/material/Collapse";
 import Link from "next/link";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
+import { RootState } from "@/store";
+import { UserStatus } from "@/types";
 
 const menuItems = [
   {
@@ -43,20 +47,14 @@ const adminMenuItems = [
     icon: <CampaignIcon />,
     path: "/admin/addevent",
   },
-  {
-    name: "Add speaker",
-    icon: <GroupAddIcon />,
-    path: "/admin/addspeaker",
-  },
+  // {
+  //   name: "Add speaker",
+  //   icon: <GroupAddIcon />,
+  //   path: "/admin/addspeaker",
+  // },
 ];
 
 const Menu = () => {
-  const [open, setOpen] = useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
   return (
     <List>
       {menuItems.map(({ name, icon, path }, index) => (
@@ -70,6 +68,23 @@ const Menu = () => {
         </ListItem>
       ))}
       <Divider />
+
+      <AdminMenu />
+    </List>
+  );
+};
+
+const AdminMenu = () => {
+  const [open, setOpen] = useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const UserState = useSelector((state: RootState) => state.user.status);
+  if (UserState !== UserStatus.SUCCEEDED) return null;
+  return adminMenuItems.map(({ name, icon, path }, index) => (
+    <>
       <ListItem disablePadding>
         <ListItemButton onClick={handleClick}>
           <ListItemIcon>
@@ -80,21 +95,19 @@ const Menu = () => {
         </ListItemButton>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="ul" sx={{pl: 2}} disablePadding>
-          {adminMenuItems.map(({ name, icon, path }, index) => (
-            <ListItem key={name + index.toString()} disablePadding>
-              <Link href={path} passHref>
-                <ListItemButton>
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={name} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))}
+        <List component="ul" sx={{ pl: 2 }} disablePadding>
+          <ListItem key={name + index.toString()} disablePadding>
+            <Link href={path} passHref>
+              <ListItemButton>
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={name} />
+              </ListItemButton>
+            </Link>
+          </ListItem>
         </List>
       </Collapse>
-    </List>
-  );
+    </>
+  ));
 };
 
 export default Menu;

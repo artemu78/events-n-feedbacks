@@ -6,11 +6,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { redirect } from 'next/navigation';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import React from "react";
-
-import { auth } from "@/services/firebaseconfig"; // import your firebase auth instance
 
 import { formSubmitAction } from "./formaction";
 

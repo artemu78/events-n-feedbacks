@@ -14,7 +14,7 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -22,7 +22,8 @@ import {
   registerUserLogin,
   signInWithFacebook,
   signInWithGoogle,
-  signInWithTwitter} from "@/services/firebaseservice";
+  signInWithTwitter,
+} from "@/services/firebaseservice";
 import { AppDispatch } from "@/store";
 import { clearUser, setUser } from "@/store/userslice";
 
@@ -34,25 +35,51 @@ const Login = ({ title }: LoginProps) => {
   const [error, setError] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = searchParams?.get("pathname");
 
-  const handleAuthClick = (authFunction: typeof signInWithFacebook ) => async () => {
-    const { user, error } = await authFunction();
-    if (user) {
-      registerUserLogin(user);
-      dispatch(
-        setUser({
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-        })
-      );
-      router.back();
-    }
-    if (error) {
-      setError(error.message);
-    }
-  };
+  const handleAuthClick =
+    (authFunction: typeof signInWithFacebook) => async () => {
+      const { user, error } = await authFunction();
+      if (user) {
+        registerUserLogin(user);
+        const token = await user.getIdToken();
+
+        const fetchResult = fetch("/api/auth", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const disptachResult = dispatch(
+          setUser({
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          })
+        );
+
+        Promise.all([fetchResult, disptachResult]).then((values) => {
+          if ((values[0].status === 200) && pathname) {
+            router.push(pathname);
+          } else {
+            router.back();
+          }
+        });
+
+        // .then((response) => {
+        //   if (response.status === 200) {
+        //     router.push("/app");
+        //   }
+        // });
+      }
+      if (error) {
+        setError(error.message);
+      }
+    };
 
   return (
     <Dialog
@@ -96,7 +123,7 @@ const Login = ({ title }: LoginProps) => {
           >
             Google
           </Button>
-          <Button
+          {/* <Button
             color="inherit"
             startIcon={<FacebookIcon />}
             sx={{ py: 2 }}
@@ -111,7 +138,7 @@ const Login = ({ title }: LoginProps) => {
             onClick={handleAuthClick(signInWithTwitter)}
           >
             Twitter
-          </Button>
+          </Button> */}
         </Stack>
       </DialogContent>
       {error && (

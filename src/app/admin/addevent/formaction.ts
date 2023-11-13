@@ -16,8 +16,6 @@ export async function formSubmitAction(formData: FormData) {
         createDateTime: new Date().toISOString(),
     });
 
-    // console.log("result", result);
-
 
     // try {
       

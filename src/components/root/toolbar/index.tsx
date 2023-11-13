@@ -77,14 +77,14 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
   };
 
   const handleCloseUserMenu = (menuItem: ISettingsIds) => async () => {
-    console.log(handleCloseUserMenu);
     if (menuItem === "logout") {
       await logout();
+      document.cookie = "session=;path=/;max-age=0;";
       dispatch(clearUser());
     }
     setAnchorElUser(null);
   };
-  console.log("anchorElUser", anchorElUser);
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">

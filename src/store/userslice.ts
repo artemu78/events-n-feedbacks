@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { User,UserState } from '@/types';
+import { User,UserState, UserStatus } from '@/types';
 
 const initialState: UserState = {
   user: null,
-  status: 'idle',
+  status: UserStatus.IDLE,
   error: null,
 };
 
@@ -14,11 +14,11 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
-      state.status = 'succeeded';
+      state.status = UserStatus.SUCCEEDED;
     },
     clearUser: (state) => {
       state.user = null;
-      state.status = 'idle';
+      state.status = UserStatus.IDLE;
     },
     setStatus: (state, action: PayloadAction<UserState['status']>) => {
       state.status = action.payload;
