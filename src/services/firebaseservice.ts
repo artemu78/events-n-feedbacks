@@ -5,12 +5,12 @@ import {
   signInWithPopup,
   signOut,
   TwitterAuthProvider,
-} from "firebase/auth";
-import { get, ref, set, update } from "firebase/database";
+} from 'firebase/auth';
+import { get, ref, set, update } from 'firebase/database';
 
-import { User } from "@/types";
+import { User } from '@/types';
 
-import { auth, db } from "./firebaseconfig";
+import { auth, db } from './firebaseconfig';
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
@@ -26,7 +26,7 @@ interface IError {
 
 const getGenericProviderResult = async (
   providerInstance: any,
-  providerClass: any
+  providerClass: any,
 ) => {
   const result = await signInWithPopup(auth, providerInstance);
   // This gives you a Google Access Token. You can use it to access Google APIs.
@@ -36,12 +36,12 @@ const getGenericProviderResult = async (
 
 const signInWithGenericProvider = async (
   providerInstance: any,
-  providerClass: any
+  providerClass: any,
 ) => {
   try {
     const { result, credential } = await getGenericProviderResult(
       providerInstance,
-      providerClass
+      providerClass,
     );
     const token = credential?.accessToken;
     // The signed-in user info.
@@ -77,62 +77,18 @@ export const signInWithTwitter = async () => {
   return signInWithGenericProvider(twitterProvider, TwitterAuthProvider);
 };
 
-export const signInWithGoogle_old = async () => {
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    // This gives you a Google Access Token. You can use it to access Google APIs.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-
-    return { user };
-    // ...
-    // Handle the signed-in user information (e.g., store in state, redirect, etc.)
-  } catch (error: IError | any) {
-    // Handle Errors here.
-    const errorCode = error?.code;
-    const errorMessage = error?.message;
-    // The email of the user's account used.
-    const email = error?.customData?.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-
-    return { error };
-    // ...
-    // Handle errors here
-  }
-};
-
-export const loginWithEmailPassword = async (
-  email: string,
-  password: string
-) => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    return userCredential.user;
-  } catch (error) {
-    console.error("Login failed:", error);
-    throw error;
-  }
-};
-
 export const logout = async () => {
   try {
     await signOut(auth);
   } catch (error) {
-    console.error("Logout failed:", error);
+    console.error('Logout failed:', error);
     throw error;
   }
 };
 
 export const registerUserLogin = async (user: User) => {
   try {
-    const {uid , displayName, email, photoURL} = user;
+    const { uid, displayName, email, photoURL } = user;
     const userReference = ref(db, `users/${uid}}`);
     const snapshot = await get(userReference);
     if (snapshot.exists()) {
@@ -152,7 +108,7 @@ export const registerUserLogin = async (user: User) => {
       });
     }
   } catch (error) {
-    console.error("Register failed:", error);
+    console.error('Register failed:', error);
     throw error;
   }
 };

@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { customInitApp } from "@/services/firebaseadmin";
 
-
 export async function GET(request: NextRequest) {
   const session = cookies().get("session")?.value || "";
   //Validate if the cookie exist in the request
@@ -19,8 +18,18 @@ export async function GET(request: NextRequest) {
   if (!decodedClaims) {
     return NextResponse.json({ isLogged: false }, { status: 401 });
   }
-
-  return NextResponse.json({ isLogged: true, user: decodedClaims }, { status: 200 });
+  const {
+    iss,
+    aud,
+    auth_time,
+    sub,
+    iat,
+    exp,
+    firebase,
+    email_verified,
+    ...user
+  } = decodedClaims;
+  return NextResponse.json({ isLogged: true, user }, { status: 200 });
 }
 
 export async function POST(request: NextRequest, response: NextResponse) {

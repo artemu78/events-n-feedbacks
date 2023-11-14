@@ -14,21 +14,16 @@ import styles from './index.module.css';
 const drawerWidth = 240;
 
 interface IMain {
-    open: boolean;
-    children: React.ReactNode;
-    theme?: any;
+  open: boolean;
+  children: React.ReactNode;
+  theme?: any;
 }
 
-
 const Main = ({ open, children, theme }: IMain) => {
-    const combinedStyles = `${styles.mainBase} ${open ? styles.mainOpen : ''}`;
-  
-    return (
-      <main className={combinedStyles}>
-        {children}
-      </main>
-    );
-  };
+  const combinedStyles = `${styles.mainBase} ${open ? styles.mainOpen : ''}`;
+
+  return <main className={combinedStyles}>{children}</main>;
+};
 
 // const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 //   open?: boolean;
@@ -72,14 +67,12 @@ interface AppBarProps extends MuiAppBarProps {
 // }));
 
 const AppBar = ({ open, children }: AppBarProps) => {
-    const combinedStyles = `${styles.appBarBase} ${open ? styles.appBarOpen : ''}`;
-  
-    return (
-      <MuiAppBar className={combinedStyles}>
-        {children}
-      </MuiAppBar>
-    );
-  };
+  const combinedStyles = `${styles.appBarBase} ${
+    open ? styles.appBarOpen : ''
+  }`;
+
+  return <MuiAppBar className={combinedStyles}>{children}</MuiAppBar>;
+};
 
 // const DrawerHeader = styled('div')(({ theme }) => ({
 //   display: 'flex',
@@ -91,22 +84,22 @@ const AppBar = ({ open, children }: AppBarProps) => {
 // }));
 
 const DrawerHeader = ({ children }: AppBarProps) => {
-    const combinedStyles = `${styles.drawerHeaderBase}`;
-  
-    return (
-      <div className={combinedStyles}>
-        {children}
-      </div>
-    );
-  }
+  const combinedStyles = `${styles.drawerHeaderBase}`;
+
+  return <div className={combinedStyles}>{children}</div>;
+};
 interface PersistentDrawerLeftProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    children?: React.ReactNode;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  children?: React.ReactNode;
 }
 
-export default function PersistentDrawerLeft({open = false, setOpen, children}: PersistentDrawerLeftProps) {
-//   const theme = useTheme();
+export default function PersistentDrawerLeft({
+  open = false,
+  setOpen,
+  children,
+}: PersistentDrawerLeftProps) {
+  //   const theme = useTheme();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -117,7 +110,7 @@ export default function PersistentDrawerLeft({open = false, setOpen, children}: 
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <CustomToolbar handleDrawerOpen={handleDrawerOpen} open={open} />
@@ -143,9 +136,7 @@ export default function PersistentDrawerLeft({open = false, setOpen, children}: 
         <Divider />
         <Menu />
       </Drawer>
-      <Main open={open}>
-        {children}
-      </Main>
+      <Main open={open}>{children}</Main>
     </Box>
   );
 }

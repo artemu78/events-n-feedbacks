@@ -7,8 +7,9 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const urlEncodedPathname = encodeURIComponent(pathname);
   //Return to /login if don't have a session
   if (!session) {
-
-    return NextResponse.redirect(new URL(`/signin?pathname=${urlEncodedPathname}`, request.url));
+    return NextResponse.redirect(
+      new URL(`/signin?pathname=${urlEncodedPathname}`, request.url)
+    );
   }
 
   //Call the authentication endpoint
@@ -20,7 +21,12 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
   //Return to /login if token is not authorized
   if (responseAPI.status !== 200) {
-    return NextResponse.redirect(new URL(`/signin?pathname=${urlEncodedPathname}`+ responseAPI.status, request.url));
+    return NextResponse.redirect(
+      new URL(
+        `/signin?pathname=${urlEncodedPathname}` + responseAPI.status,
+        request.url
+      )
+    );
   }
 
   return NextResponse.next();
