@@ -1,6 +1,6 @@
 {
   "name": "events-n-feedbacks",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "homepage": "./",
   "private": true,
   "scripts": {
@@ -33,6 +33,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^3.1.0",
     "typescript": "^5",
     "typescript-coverage-report": "^0.8.0"
   }
