@@ -28,4 +28,5 @@ function config() {
 }
 
 export const database = admin.database();
+
 export default admin;

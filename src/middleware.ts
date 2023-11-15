@@ -1,14 +1,14 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest, response: NextResponse) {
-  const session = request.cookies.get("session");
+  const session = request.cookies.get('session');
   const pathname = request.nextUrl.pathname;
   const urlEncodedPathname = encodeURIComponent(pathname);
   //Return to /login if don't have a session
   if (!session) {
     return NextResponse.redirect(
-      new URL(`/signin?pathname=${urlEncodedPathname}`, request.url)
+      new URL(`/signin?pathname=${urlEncodedPathname}`, request.url),
     );
   }
 
@@ -24,8 +24,8 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     return NextResponse.redirect(
       new URL(
         `/signin?pathname=${urlEncodedPathname}` + responseAPI.status,
-        request.url
-      )
+        request.url,
+      ),
     );
   }
 
@@ -34,5 +34,5 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
 //Add your protected routes
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ['/admin/:path*', '/events/:path*/addfeedback'],
 };

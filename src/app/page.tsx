@@ -1,14 +1,31 @@
-import Typography from "@mui/material/Typography";
-import type { Metadata } from "next";
+import { Button, Typography } from '@mui/material';
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: "Events'n'Feedback",
-  description: "Event, speakers and their feedback",
+  description: 'Event, speakers and their feedback',
 };
 
 export default function Page() {
   return (
     <>
+      <Link href="/events" passHref>
+        <Button variant="contained" sx={{ m: 1 }}>
+          Events
+        </Button>
+      </Link>
+      <Link href="/speakers" passHref>
+        <Button variant="contained" sx={{ m: 1 }}>
+          Speakers
+        </Button>
+      </Link>
+      <Link href="/moderators" passHref>
+        <Button variant="contained" sx={{ m: 1 }}>
+          Moderators
+        </Button>
+      </Link>
+
       <Typography paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus

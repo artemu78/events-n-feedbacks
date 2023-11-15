@@ -3,24 +3,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { database } from '@/services/firebaseadmin';
+import { flattenJson } from '@/services/utils';
 import { Event } from '@/types';
-type EventRecord = Record<string, Event>;
-interface EventRecordWithId extends Event {
-  id: string;
-}
-
-function flattenJson(jsonObject: EventRecord): Array<EventRecordWithId> {
-  const flattenedArray: Array<EventRecordWithId> = [];
-
-  for (const key in jsonObject) {
-    if (jsonObject.hasOwnProperty(key)) {
-      const flattenedObject = { id: key, ...jsonObject[key] };
-      flattenedArray.push(flattenedObject);
-    }
-  }
-
-  return flattenedArray;
-}
 
 async function getData() {
   try {
@@ -67,9 +51,9 @@ const Page = () => {
 
 const Events = async () => {
   const events = await getData();
-  const eventsArray = flattenJson(events.data);
+  const eventsArray = flattenJson<Event>(events.data);
 
-  return eventsArray.map((event: EventRecordWithId) => {
+  return eventsArray.map((event) => {
     return (
       <Link key={event.id} passHref href={`/events/${event.id}`}>
         <Paper

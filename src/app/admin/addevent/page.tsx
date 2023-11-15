@@ -5,11 +5,11 @@ import {
   InputLabel,
   TextField,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import React from "react";
+import React from 'react';
 
-import { formSubmitAction } from "./formaction";
+import { formSubmitAction } from './formaction';
 
 const EventForm = () => {
   return (
@@ -40,6 +40,18 @@ const EventForm = () => {
           type="text"
         />
 
+        <TextField
+          label="Topic"
+          id="topic"
+          variant="outlined"
+          margin="normal"
+          multiline
+          rows={4}
+          fullWidth
+          name="topic"
+          type="text"
+        />
+
         <FormControl variant="outlined" fullWidth>
           <InputLabel htmlFor="eventDate">Event date</InputLabel>
           <TextField
@@ -59,7 +71,7 @@ const EventForm = () => {
           fullWidth
           variant="contained"
           color="primary"
-          style={{ marginTop: "24px" }}
+          style={{ marginTop: '24px' }}
         >
           Add Event
         </Button>

@@ -5,47 +5,48 @@ import {
   ExpandMore,
   Group as GroupIcon,
   GroupAdd as GroupAddIcon,
-} from "@mui/icons-material";
-import InterpreterModeIcon from "@mui/icons-material/InterpreterMode";
+} from '@mui/icons-material';
+import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 import {
+  Box,
   Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from "@mui/material";
-import Collapse from "@mui/material/Collapse";
-import Link from "next/link";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+} from '@mui/material';
+import Collapse from '@mui/material/Collapse';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { RootState } from "@/store";
-import { UserStatus } from "@/types";
+import { RootState } from '@/store';
+import { UserStatus } from '@/types';
 
 const menuItems = [
   {
-    name: "Events",
+    name: 'Events',
     icon: <CampaignIcon />,
-    path: "/events",
+    path: '/events',
   },
   {
-    name: "Speakers",
+    name: 'Speakers',
     icon: <GroupIcon />,
-    path: "/speakers",
+    path: '/speakers',
   },
   {
-    name: "Moderators",
+    name: 'Moderators',
     icon: <InterpreterModeIcon />,
-    path: "/moderators",
+    path: '/moderators',
   },
 ];
 
 const adminMenuItems = [
   {
-    name: "Add event",
+    name: 'Add event',
     icon: <CampaignIcon />,
-    path: "/admin/addevent",
+    path: '/admin/addevent',
   },
   // {
   //   name: "Add speaker",
@@ -84,7 +85,7 @@ const AdminMenu = () => {
   const UserState = useSelector((state: RootState) => state.user.status);
   if (UserState !== UserStatus.SUCCEEDED) return null;
   return adminMenuItems.map(({ name, icon, path }, index) => (
-    <>
+    <Box key={name}>
       <ListItem disablePadding>
         <ListItemButton onClick={handleClick}>
           <ListItemIcon>
@@ -106,7 +107,7 @@ const AdminMenu = () => {
           </ListItem>
         </List>
       </Collapse>
-    </>
+    </Box>
   ));
 };
 

@@ -1,30 +1,32 @@
 'use server';
+import { getAuth } from 'firebase/auth';
 import { get, push, ref, set, update } from 'firebase/database';
 import { revalidatePath } from 'next/cache';
-import { redirect, RedirectType } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import { db } from '@/services/firebaseconfig';
 
 export async function formSubmitAction(formData: FormData) {
   'use server';
+  const eventId = formData.get('eventId');
+  const eventReference = ref(db, `feedbacks`);
+  // const auth = getAuth();
+  // const user = auth.currentUser;
 
-  try {
-    const eventReference = ref(db, `events`);
+  const result = await push(eventReference, {
+    // userId: user?.uid,
+    eventId,
+    addressee: formData.get('addressee'),
+    sender: 'fake sender',
+    good: formData.get('good'),
+    improve: formData.get('improve'),
+    suggestion: formData.get('suggestion'),
+    anonymous: formData.get('anonymous'),
+    createDateTime: new Date().toISOString(),
+  });
 
-    const result = await push(eventReference, {
-      moderator: formData.get('moderatorName'),
-      date: formData.get('eventDate'),
-      address: formData.get('address'),
-      topic: formData.get('topic'),
-      createDateTime: new Date().toISOString(),
-    });
-
-    await revalidatePath('/events');
-    // redirect('/events', RedirectType.push);
-  } catch (error) {
-    console.error('Error fetching events: ', error);
-    return {};
-  }
+  revalidatePath(`/events/${eventId}/myfeedback`);
+  redirect(`/events/${eventId}`);
   // try {
 
   //   const response = await fetch("/api/addevent", {

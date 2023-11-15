@@ -28,3 +28,14 @@ export interface Event {
   title: string;
   description: string;
 }
+
+export interface Feedback {
+  anonymous: string;
+  addressee: string;
+  createDateTime: string;
+  eventId: string;
+  good: string;
+  improve: string;
+  sender: string;
+  suggestion: string;
+}

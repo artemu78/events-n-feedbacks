@@ -1,4 +1,6 @@
 'use client';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,7 +14,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const UserState = useSelector((state: RootState) => state.user.status);
 
   const loginUser = (user: User) => {
@@ -34,7 +38,7 @@ export default function RootLayout({
     }
   };
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(matches);
   useEffect(() => {
     if (UserState === UserStatus.IDLE) checkUserLogged();
   }, []);
