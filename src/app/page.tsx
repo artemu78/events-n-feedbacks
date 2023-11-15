@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -10,21 +10,28 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <Link href="/events" passHref>
-        <Button variant="contained" sx={{ m: 1 }}>
-          Events
-        </Button>
-      </Link>
-      <Link href="/speakers" passHref>
-        <Button variant="contained" sx={{ m: 1 }}>
-          Speakers
-        </Button>
-      </Link>
-      <Link href="/moderators" passHref>
-        <Button variant="contained" sx={{ m: 1 }}>
-          Moderators
-        </Button>
-      </Link>
+      <Box sx={{ mb: 2 }}>
+        <Link href="/events" passHref>
+          <Button variant="contained" sx={{ mr: 1 }}>
+            Events
+          </Button>
+        </Link>
+        <Link href="/feedbacks" passHref>
+          <Button variant="contained" sx={{ mr: 1 }}>
+            My Feedbacks
+          </Button>
+        </Link>
+        <Link href="/speakers" passHref>
+          <Button variant="contained" sx={{ mr: 1 }}>
+            Speakers
+          </Button>
+        </Link>
+        <Link href="/moderators" passHref>
+          <Button variant="contained" sx={{ mr: 1 }}>
+            Moderators
+          </Button>
+        </Link>
+      </Box>
 
       <Typography paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

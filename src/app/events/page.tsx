@@ -2,25 +2,10 @@ import { Paper, Stack, Typography } from '@mui/material';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import { database } from '@/services/firebaseadmin';
 import { flattenJson } from '@/services/utils';
 import { Event } from '@/types';
 
-async function getData() {
-  try {
-    const something = await database.ref('events').get();
-
-    const data = something.val();
-
-    return {
-      data,
-    };
-  } catch (error) {
-    console.error('Error fetching events: ', error);
-    return {};
-  }
-}
-
+import { getEventsData } from './action';
 export const metadata: Metadata = {
   title: "Events'n'Feedback / events",
   description: 'Event, speakers and their feedback',
@@ -50,7 +35,7 @@ const Page = () => {
 };
 
 const Events = async () => {
-  const events = await getData();
+  const events = await getEventsData();
   const eventsArray = flattenJson<Event>(events.data);
 
   return eventsArray.map((event) => {

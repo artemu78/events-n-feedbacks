@@ -44,19 +44,27 @@ const Page = async ({ params }: { params: { event: string } }) => {
         </Link>
         <Typography color="text.primary">My feedbacks</Typography>
       </Breadcrumbs>
-      <Typography component="h1" variant="h5">
+      <Typography component="h2" variant="h5" sx={{ mb: 2 }}>
         My feedbacks
       </Typography>
+      <Typography component="div" variant="body1" sx={{ color: '#757575' }}>
+        Feedback summary:
+      </Typography>
+      <Typography component="span" variant="body1">
+        According to the feedbacks you have received, you are a great
+        storyteller. Next time would be nice to focus on eye contact and stage
+        usage purpously.
+      </Typography>
       {feedbacksArray.map((feedback) => (
-        <Feedback key={feedback.id} feedback={feedback} />
+        <SingleFeedback key={feedback.id} feedback={feedback} />
       ))}
     </>
   );
 };
 
-const Feedback = ({ feedback }: { feedback: Feedback }) => {
+export const SingleFeedback = ({ feedback }: { feedback: Feedback }) => {
   return (
-    <Paper sx={{ p: 2, my: 2 }}>
+    <Paper sx={{ p: 2, m: 2 }}>
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6} sm={2}>
           <Typography variant="body1" sx={{ color: '#757575' }}>

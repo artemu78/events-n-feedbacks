@@ -3,6 +3,7 @@ import {
   Campaign as CampaignIcon,
   ExpandLess,
   ExpandMore,
+  Feedback as FeedbackIcon,
   Group as GroupIcon,
   GroupAdd as GroupAddIcon,
 } from '@mui/icons-material';
@@ -29,6 +30,11 @@ const menuItems = [
     name: 'Events',
     icon: <CampaignIcon />,
     path: '/events',
+  },
+  {
+    name: 'My feedbacks',
+    icon: <FeedbackIcon />,
+    path: '/feedbacks',
   },
   {
     name: 'Speakers',
