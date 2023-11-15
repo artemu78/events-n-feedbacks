@@ -1,20 +1,8 @@
-import {
-  Box,
-  Breadcrumbs,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  Link as MUILink,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Breadcrumbs, Link as MUILink, Typography } from '@mui/material';
 import Link from 'next/link';
 
-import { SingleFeedback } from '@/app/events/[event]/myfeedback/page';
 import { getEventsData } from '@/app/events/action';
+import SingleFeedback from '@/components/feedback';
 import { flattenJson } from '@/services/utils';
 import { Feedback } from '@/types';
 
