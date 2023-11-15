@@ -1,7 +1,6 @@
 'use server';
-import { get, push, ref, set, update } from 'firebase/database';
+import { push, ref } from 'firebase/database';
 import { revalidatePath } from 'next/cache';
-import { redirect, RedirectType } from 'next/navigation';
 
 import { db } from '@/services/firebaseconfig';
 

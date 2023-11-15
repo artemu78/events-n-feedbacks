@@ -1,11 +1,4 @@
-import {
-  equalTo,
-  get,
-  getDatabase,
-  orderByChild,
-  query,
-  ref,
-} from 'firebase/database';
+import { get, orderByChild, query, ref } from 'firebase/database';
 
 import { db } from '@/services/firebaseconfig';
 

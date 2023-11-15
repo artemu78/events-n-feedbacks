@@ -1,15 +1,4 @@
-import {
-  Breadcrumbs,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  Link as MUILink,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Breadcrumbs, Link as MUILink, Typography } from '@mui/material';
 import Link from 'next/link';
 
 import { getEventData } from '@/app/events/[event]/formaction';
