@@ -1,6 +1,6 @@
 {
   "name": "events-n-feedbacks",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "homepage": "./",
   "private": true,
   "scripts": {
@@ -11,6 +11,8 @@
     "ts-coverage": "typescript-coverage-report"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.16",
     "@reduxjs/toolkit": "^1.9.7",
