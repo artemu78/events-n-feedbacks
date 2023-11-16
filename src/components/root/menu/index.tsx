@@ -60,6 +60,11 @@ const adminMenuItems = [
     icon: <GroupsIcon />,
     path: '/admin/addorganization',
   },
+  {
+    name: 'Organizations',
+    icon: <GroupsIcon />,
+    path: '/admin/organizations',
+  },
 ];
 
 const Menu = () => {

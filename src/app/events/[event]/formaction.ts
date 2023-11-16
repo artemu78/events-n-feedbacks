@@ -8,7 +8,7 @@ export async function getEventData(eventid: string) {
 
     return { ...data };
   } catch (error) {
-    console.error('Error fetching events: ', error);
+    console.error(`Error fetching event '${eventid}': `, error);
     return {};
   }
 }

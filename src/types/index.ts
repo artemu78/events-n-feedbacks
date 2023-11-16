@@ -39,3 +39,11 @@ export interface Feedback {
   sender: string;
   suggestion: string;
 }
+
+export interface Organization {
+  title: string;
+  description: string;
+  site: string;
+  instagram: string;
+  facebook: string;
+}
