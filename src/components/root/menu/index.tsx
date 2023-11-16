@@ -6,6 +6,7 @@ import {
   Feedback as FeedbackIcon,
   Group as GroupIcon,
   GroupAdd as GroupAddIcon,
+  Groups as GroupsIcon,
 } from '@mui/icons-material';
 import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 import {
@@ -54,11 +55,11 @@ const adminMenuItems = [
     icon: <CampaignIcon />,
     path: '/admin/addevent',
   },
-  // {
-  //   name: "Add speaker",
-  //   icon: <GroupAddIcon />,
-  //   path: "/admin/addspeaker",
-  // },
+  {
+    name: 'Add organization',
+    icon: <GroupsIcon />,
+    path: '/admin/addorganization',
+  },
 ];
 
 const Menu = () => {
@@ -90,8 +91,8 @@ const AdminMenu = () => {
 
   const UserState = useSelector((state: RootState) => state.user.status);
   if (UserState !== UserStatus.SUCCEEDED) return null;
-  return adminMenuItems.map(({ name, icon, path }, index) => (
-    <Box key={name}>
+  return (
+    <>
       <ListItem disablePadding>
         <ListItemButton onClick={handleClick}>
           <ListItemIcon>
@@ -103,18 +104,20 @@ const AdminMenu = () => {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="ul" sx={{ pl: 2 }} disablePadding>
-          <ListItem key={name + index.toString()} disablePadding>
-            <Link href={path} passHref>
-              <ListItemButton>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={name} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
+          {adminMenuItems.map(({ name, icon, path }, index) => (
+            <ListItem key={name + index.toString()} disablePadding>
+              <Link href={path} passHref>
+                <ListItemButton>
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={name} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          ))}
         </List>
       </Collapse>
-    </Box>
-  ));
+    </>
+  );
 };
 
 export default Menu;

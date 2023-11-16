@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const Page = () => {
   return (
-    <div>
+    <>
       <Typography sx={{ mb: 2 }} variant="h4">
         Events
       </Typography>
@@ -30,7 +30,7 @@ const Page = () => {
       >
         <Events />
       </Stack>
-    </div>
+    </>
   );
 };
 

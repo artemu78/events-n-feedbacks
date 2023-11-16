@@ -1,5 +1,5 @@
-import { Login as LoginIcon, Menu as MenuIcon } from "@mui/icons-material";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { Login as LoginIcon, Menu as MenuIcon } from '@mui/icons-material';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {
   Avatar,
   Box,
@@ -10,23 +10,23 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from "@mui/material";
-import Link from "next/link";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+} from '@mui/material';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { logout } from "@/services/firebaseservice";
-import { RootState } from "@/store";
-import { clearUser } from "@/store/userslice";
-import { User, UserState } from "@/types";
+import { logout } from '@/services/firebaseservice';
+import { RootState } from '@/store';
+import { clearUser } from '@/store/userslice';
+import { User, UserState } from '@/types';
 interface ToolbarCustomProps {
   open: boolean;
   handleDrawerOpen: () => void;
 }
 
-const settings = [{ label: "Logout", id: "logout" }];
-type ISettingsIds = (typeof settings)[number]["id"];
+const settings = [{ label: 'Profile', id: 'profile' }];
+type ISettingsIds = (typeof settings)[number]['id'];
 
 const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -37,7 +37,7 @@ const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
         aria-label="open drawer"
         onClick={handleDrawerOpen}
         edge="start"
-        sx={{ mr: 2, ...(open && { display: "none" }) }}
+        sx={{ mr: 2, ...(open && { display: 'none' }) }}
       >
         <MenuIcon />
       </IconButton>
@@ -77,9 +77,9 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
   };
 
   const handleCloseUserMenu = (menuItem: ISettingsIds) => async () => {
-    if (menuItem === "logout") {
+    if (menuItem === 'logout') {
       await logout();
-      document.cookie = "session=;path=/;max-age=0;";
+      document.cookie = 'session=;path=/;max-age=0;';
       dispatch(clearUser());
     }
     setAnchorElUser(null);
@@ -96,26 +96,33 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: "45px" }}
+        sx={{ mt: '45px' }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         keepMounted
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         open={Boolean(anchorElUser)}
-        onClose={() => {setAnchorElUser(null)}}
+        onClose={() => {
+          setAnchorElUser(null);
+        }}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting.id} onClick={handleCloseUserMenu(setting.id)}>
-            <Typography textAlign="center">{setting.label}</Typography>
-          </MenuItem>
+          <Link key={setting.id} href={`/${setting.id}`}>
+            <MenuItem>
+              <Typography textAlign="center">{setting.label}</Typography>
+            </MenuItem>
+          </Link>
         ))}
+        <MenuItem key={'logout'} onClick={handleCloseUserMenu('logout')}>
+          <Typography textAlign="center">Logout</Typography>
+        </MenuItem>
       </Menu>
     </Box>
   );
