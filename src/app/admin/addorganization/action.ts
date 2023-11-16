@@ -5,8 +5,6 @@ import { revalidatePath } from 'next/cache';
 import { db } from '@/services/firebaseconfig';
 
 export async function formSubmitAction(formData: FormData) {
-  'use server';
-
   try {
     const eventReference = ref(db, `organizations`);
 
@@ -17,7 +15,7 @@ export async function formSubmitAction(formData: FormData) {
       instagram: formData.get('instagram'),
       facebook: formData.get('facebook'),
       createDateTime: new Date().toISOString(),
-      creatorUserId: formData.get('userId'),
+      createUserId: formData.get('userId'),
     });
 
     await revalidatePath('/events');

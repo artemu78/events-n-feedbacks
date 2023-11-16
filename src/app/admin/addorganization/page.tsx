@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   Container,
   FormControl,
   InputLabel,
@@ -8,6 +9,8 @@ import {
 } from '@mui/material';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import React from 'react';
+
+import HiddenUserIdField from '@/components/userfield';
 
 import { formSubmitAction } from './action';
 
@@ -19,6 +22,8 @@ const EventForm = () => {
         Add New Organization
       </Typography>
       <form action={formSubmitAction}>
+        <HiddenUserIdField />
+
         <TextField
           variant="outlined"
           margin="normal"
@@ -67,6 +72,15 @@ const EventForm = () => {
           name="facebook"
           type="url"
         />
+
+        {/* <Checkbox
+          label="Anyone can join freely"
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          name="facebook"
+          type="url"
+        /> */}
 
         <Button
           type="submit"

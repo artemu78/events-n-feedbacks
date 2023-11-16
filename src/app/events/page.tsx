@@ -1,4 +1,10 @@
-import { Paper, Stack, Typography } from '@mui/material';
+import {
+  Breadcrumbs,
+  Link as MUILink,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -14,6 +20,15 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <>
+      <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+        <Link href="/" passHref>
+          <MUILink component="span" underline="hover" color="inherit">
+            Home
+          </MUILink>
+        </Link>
+        <Typography color="text.primary">Events</Typography>
+      </Breadcrumbs>
+
       <Typography sx={{ mb: 2 }} variant="h4">
         Events
       </Typography>

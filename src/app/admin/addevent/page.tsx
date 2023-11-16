@@ -6,8 +6,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import React from 'react';
+
+import HiddenUserIdField from '@/components/userfield';
 
 import { formSubmitAction } from './formaction';
 
@@ -18,6 +19,7 @@ const EventForm = () => {
         Add New Event
       </Typography>
       <form action={formSubmitAction}>
+        <HiddenUserIdField />
         <TextField
           variant="outlined"
           margin="normal"

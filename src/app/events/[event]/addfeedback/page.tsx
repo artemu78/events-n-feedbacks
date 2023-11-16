@@ -15,6 +15,7 @@ import {
 import Link from 'next/link';
 
 import { getEventData } from '@/app/events/[event]/formaction';
+import HiddenUserIdField from '@/components/userfield';
 
 import { formSubmitAction } from './formaction';
 
@@ -47,6 +48,7 @@ const Page = async ({ params }: { params: { event: string } }) => {
         Add new feedback
       </Typography>
       <form action={formSubmitAction}>
+        <HiddenUserIdField />
         <TextField
           name="eventId"
           value={eventId}
