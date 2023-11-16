@@ -89,7 +89,7 @@ export const logout = async () => {
 export const registerUserLogin = async (user: User) => {
   try {
     const { uid, displayName, email, photoURL } = user;
-    const userReference = ref(db, `users/${uid}}`);
+    const userReference = ref(db, `users/${uid}`);
     const snapshot = await get(userReference);
     if (snapshot.exists()) {
       update(userReference, {

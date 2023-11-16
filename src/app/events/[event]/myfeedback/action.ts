@@ -1,13 +1,9 @@
-import {
-  equalTo,
-  get,
-  getDatabase,
-  orderByChild,
-  query,
-  ref,
-} from 'firebase/database';
+import { equalTo, get, orderByChild, query, ref } from 'firebase/database';
 
+import { getCollectionData } from '@/services/actions';
 import { db } from '@/services/firebaseconfig';
+import { EnrichCollection } from '@/services/utils';
+import { Feedback, User } from '@/types';
 
 export async function getFeedbacks(eventid: string) {
   try {
@@ -17,12 +13,19 @@ export async function getFeedbacks(eventid: string) {
       orderByChild('eventId'),
       equalTo(eventid),
     );
-
     const snapshot = await get(feedbacksForEventQuery);
 
     if (snapshot.exists()) {
-      const feedbacks = snapshot.val();
-      return feedbacks;
+      const feedbacks = snapshot.val() as Record<string, Feedback>;
+      const users = await getCollectionData<User>('users');
+
+      const feedbacksEnriched = EnrichCollection<Feedback, User>(
+        feedbacks,
+        users,
+        'createUserId',
+        'user',
+      );
+      return feedbacksEnriched;
     } else {
       console.log(`No feedbacks found for this event '${eventid}'`);
       return {};

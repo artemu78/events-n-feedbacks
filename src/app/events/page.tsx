@@ -8,10 +8,10 @@ import {
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { getCollectionData } from '@/services/actions';
 import { flattenJson } from '@/services/utils';
 import { Event } from '@/types';
 
-import { getEventsData } from './action';
 export const metadata: Metadata = {
   title: "Events'n'Feedback / events",
   description: 'Event, speakers and their feedback',
@@ -50,8 +50,8 @@ const Page = () => {
 };
 
 const Events = async () => {
-  const events = await getEventsData();
-  const eventsArray = flattenJson<Event>(events.data);
+  const events = await getCollectionData<Event>('events');
+  const eventsArray = flattenJson<Event>(events);
 
   return eventsArray.map((event) => {
     return (

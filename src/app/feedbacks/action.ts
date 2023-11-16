@@ -1,6 +1,9 @@
 import { get, orderByChild, query, ref } from 'firebase/database';
 
+import { getCollectionData } from '@/services/actions';
 import { db } from '@/services/firebaseconfig';
+import { EnrichCollection } from '@/services/utils';
+import { Feedback, User } from '@/types';
 
 export async function getFeedbacks() {
   try {
@@ -11,7 +14,16 @@ export async function getFeedbacks() {
 
     if (snapshot.exists()) {
       const feedbacks = snapshot.val();
-      return feedbacks;
+      const users = await getCollectionData<User>('users');
+
+      const feedbacksEnriched = EnrichCollection<Feedback, User>(
+        feedbacks,
+        users,
+        'createUserId',
+        'user',
+      );
+
+      return feedbacksEnriched;
     } else {
       console.log(`No feedbacks found for this user `);
       return {};

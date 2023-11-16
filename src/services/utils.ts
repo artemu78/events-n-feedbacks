@@ -12,3 +12,23 @@ export function flattenJson<ObjectType extends object>(
 
   return flattenedArray;
 }
+
+export function EnrichCollection<
+  RecipientEntity extends {},
+  DonorEntity extends {},
+>(
+  collectionRecipient: Record<string, RecipientEntity>,
+  collectionDonor: Record<string, DonorEntity>,
+  foreignKey: keyof RecipientEntity,
+  newKey: keyof RecipientEntity,
+) {
+  const mergedCollection: Record<string, RecipientEntity> = {};
+  for (const id in collectionRecipient) {
+    const Recipient = collectionRecipient[id];
+    const DonorId = Recipient?.[foreignKey] as string;
+    const donor = collectionDonor[DonorId] as DonorEntity;
+    mergedCollection[id] = { ...Recipient, [newKey]: donor };
+  }
+
+  return mergedCollection;
+}

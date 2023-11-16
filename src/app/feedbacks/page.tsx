@@ -1,15 +1,15 @@
 import { Box, Breadcrumbs, Link as MUILink, Typography } from '@mui/material';
 import Link from 'next/link';
 
-import { getEventsData } from '@/app/events/action';
 import SingleFeedback from '@/components/feedback';
+import { getCollectionData } from '@/services/actions';
 import { flattenJson } from '@/services/utils';
-import { Feedback } from '@/types';
+import { Event, Feedback } from '@/types';
 
 import { getFeedbacks } from './action';
 
 const Page = async () => {
-  const events = await getEventsData();
+  const events = await getCollectionData<Event>('events');
   const feedbacks = (await getFeedbacks()) as Record<string, Feedback>;
   const feedbacksArray = flattenJson<Feedback>(feedbacks);
   let eventId: string | null = null;
@@ -37,7 +37,7 @@ const Page = async () => {
       {feedbacksArray.map((feedback) => {
         let eventComponent = null;
         if (feedback.eventId !== eventId) {
-          const eventObject = events?.data?.[feedback.eventId] || {};
+          const eventObject = events?.[feedback.eventId] || {};
           eventComponent = (
             <Link href={`/events/${feedback.eventId}`}>
               <Typography component="h2" variant="h5" sx={{ mt: 2 }}>

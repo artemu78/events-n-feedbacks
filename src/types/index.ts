@@ -18,26 +18,31 @@ export interface User {
   photoURL: string | null;
   picture?: string | null;
   name?: string | null;
+  registerdate?: string;
+  lastlogin?: string;
 }
 
 export interface Event {
   address: string;
-  createDateTime: string;
   date: string;
   moderator: string;
   title: string;
   description: string;
+  createUserId: string;
+  createDateTime: string;
 }
 
 export interface Feedback {
   anonymous: string;
   addressee: string;
+  createUserId: string;
   createDateTime: string;
   eventId: string;
   good: string;
   improve: string;
   sender: string;
   suggestion: string;
+  user?: User;
 }
 
 export interface Organization {
@@ -46,4 +51,6 @@ export interface Organization {
   site: string;
   instagram: string;
   facebook: string;
+  createUserId: string;
+  createDateTime: string;
 }

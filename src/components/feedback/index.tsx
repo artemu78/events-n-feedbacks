@@ -1,22 +1,11 @@
-import { Grid, Paper, Typography } from '@mui/material';
+import { Avatar, Grid, Paper, Stack, Typography } from '@mui/material';
 
 import { Feedback } from '@/types';
 
 const SingleFeedback = ({ feedback }: { feedback: Feedback }) => {
   return (
     <Paper sx={{ p: 2, m: 2 }}>
-      <Grid container spacing={2} sx={{ my: 1 }}>
-        <Grid item xs={6} sm={2}>
-          <Typography variant="body1" sx={{ color: '#757575' }}>
-            From
-          </Typography>
-        </Grid>
-        <Grid item xs={6} sm={10}>
-          <Typography variant="body1">
-            {feedback.anonymous === 'true' ? 'Anonimous' : feedback.sender}
-          </Typography>
-        </Grid>
-      </Grid>
+      <UserData feedback={feedback} />
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={12} sm={2}>
           <Typography variant="body1" sx={{ color: '#757575' }}>
@@ -48,6 +37,31 @@ const SingleFeedback = ({ feedback }: { feedback: Feedback }) => {
         </Grid>
       </Grid>
     </Paper>
+  );
+};
+
+const UserData = ({ feedback }: { feedback: Feedback }) => {
+  const isAnonymous = feedback.anonymous === 'true';
+  let user = { ...feedback.user };
+  const createDateTime = feedback.createDateTime;
+  const date = new Date(createDateTime);
+  if (isAnonymous) {
+    user.photoURL = undefined;
+    user.displayName = 'Anonimous';
+  }
+  return (
+    <Stack direction="row" spacing={2}>
+      <Avatar
+        alt={user?.displayName || undefined}
+        src={user?.photoURL || undefined}
+      />
+      <Typography variant="body1" color="#757575">
+        {user?.displayName}
+      </Typography>
+      <Typography variant="body2" color="#757575">
+        {date.toLocaleString() || ''}
+      </Typography>
+    </Stack>
   );
 };
 
