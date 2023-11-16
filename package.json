@@ -1,11 +1,12 @@
 {
   "name": "events-n-feedbacks",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "homepage": "./",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "analyze": "cross-env ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint",
     "ts-coverage": "typescript-coverage-report"
@@ -24,11 +25,13 @@
     "react-redux": "^8.1.3"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.2",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
