@@ -3,6 +3,7 @@ import {
   Checkbox,
   Container,
   FormControl,
+  FormControlLabel,
   InputLabel,
   TextField,
   Typography,
@@ -73,14 +74,26 @@ const EventForm = () => {
           type="url"
         />
 
-        {/* <Checkbox
-          label="Anyone can join freely"
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          name="facebook"
-          type="url"
-        /> */}
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel htmlFor="eventDate">Logo</InputLabel>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="logo"
+            type="file"
+          />
+        </FormControl>
+
+        <FormControlLabel
+          control={<Checkbox name="joinfree" />}
+          label="Anyone can join (otherwise by invite)"
+        />
+
+        <FormControlLabel
+          control={<Checkbox name="public" />}
+          label="Visible in main page"
+        />
 
         <Button
           type="submit"

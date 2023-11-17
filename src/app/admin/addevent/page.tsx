@@ -54,14 +54,17 @@ const EventForm = () => {
           type="text"
         />
 
-        <TextField
-          label="Logo"
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          name="logo"
-          type="file"
-        />
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel htmlFor="eventDate">Logo</InputLabel>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="logo"
+            type="file"
+          />
+        </FormControl>
+
         <FormControl variant="outlined" fullWidth>
           <InputLabel htmlFor="eventDate">Event date</InputLabel>
           <TextField
@@ -70,11 +73,11 @@ const EventForm = () => {
             margin="normal"
             required
             fullWidth
-            //   label="Event date"
             name="eventDate"
             type="date"
           />
         </FormControl>
+
         <Button
           type="submit"
           fullWidth

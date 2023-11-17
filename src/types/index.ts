@@ -55,4 +55,5 @@ export interface Organization {
   facebook: string;
   createUserId: string;
   createDateTime: string;
+  logoUrl: string;
 }

@@ -47,8 +47,8 @@ const Events = async () => {
       >
         <Paper
           sx={{
-            height: '150px',
-            width: '200px',
+            height: '300px',
+            width: '300px',
             borderColor: 'gray.500',
             p: 1,
             overflow: 'hidden',
@@ -56,7 +56,14 @@ const Events = async () => {
           component="li"
         >
           <Typography variant="h6">{organization.title}</Typography>
-          <Typography>{organization.description}</Typography>
+          <Typography noWrap>{organization.description}</Typography>
+          {organization.logoUrl && (
+            <img
+              src={organization.logoUrl}
+              alt={organization.title}
+              style={{ width: '100%' }}
+            />
+          )}
         </Paper>
       </Link>
     );
