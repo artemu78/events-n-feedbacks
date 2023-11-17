@@ -58,17 +58,25 @@ const Events = async () => {
       <Link key={event.id} passHref href={`/events/${event.id}`}>
         <Paper
           sx={{
-            height: '100px',
-            width: '100px',
-            borderColor: 'gray.500',
+            width: '300px',
+            height: '300px',
             p: 1,
+            overflow: 'hidden',
           }}
           component="li"
         >
-          <h2>{event.title}</h2>
-          <p>{event.description}</p>
-          <p>{event.date}</p>
-          <p>{event.address}</p>
+          <Typography variant="h5">{event.title}</Typography>
+
+          <Stack spacing={1} direction={{ xs: 'column', md: 'row' }}>
+            <Typography>{event.date}</Typography>
+            <Typography variant="body2">{event.address}</Typography>
+          </Stack>
+          <Typography noWrap>{event.topic}</Typography>
+          <img
+            src={event.logoUrl}
+            alt={event.title}
+            style={{ width: '100%' }}
+          />
           {/* <p>{event.moderator}</p> */}
         </Paper>
       </Link>

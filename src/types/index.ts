@@ -30,6 +30,8 @@ export interface Event {
   description: string;
   createUserId: string;
   createDateTime: string;
+  logoUrl: string;
+  topic: string;
 }
 
 export interface Feedback {

@@ -60,6 +60,6 @@ async function addEvent(formData: FormData, logoUrl: string) {
   // } catch (error) {
   //   console.error('Error saving event: ', error);
   // }
-  // await revalidatePath('/events');
-  // redirect(`/events/${newEventKey}?success`);
+  await revalidatePath('/events');
+  redirect(`/events/${newEventKey}?success`);
 }
