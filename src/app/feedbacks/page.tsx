@@ -8,7 +8,7 @@ import { Event, Feedback } from '@/types';
 
 import { getFeedbacks } from './action';
 
-const Page = async () => {
+const AppFeedbacksPage = async () => {
   const events = await getCollectionData<Event>('events');
   const feedbacks = (await getFeedbacks()) as Record<string, Feedback>;
   const feedbacksArray = flattenJson<Feedback>(feedbacks);
@@ -58,4 +58,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
+export default AppFeedbacksPage;

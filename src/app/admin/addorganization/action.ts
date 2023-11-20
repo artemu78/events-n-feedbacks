@@ -14,7 +14,7 @@ export async function formSubmitAction(formData: FormData) {
   if (fileField && fileField instanceof File) {
     let stream: NodeJS.WritableStream, bob: Buffer;
 
-    const fileRef = bucket.file(`uploads/${fileField.name}`);
+    const fileRef = bucket.file(`organizations/${fileField.name}`);
     // const blob = await fileField.stream();
     const blob = await fileField.arrayBuffer();
     bob = Buffer.from(blob);
@@ -56,8 +56,8 @@ export async function addOrganization(formData: FormData, logoUrl: string) {
       logoUrl,
     });
 
-    await revalidatePath('/admin/organizations');
-    redirect('/admin/organizations', RedirectType.push);
+    await revalidatePath('/organizations');
+    redirect('/organizations', RedirectType.push);
   } catch (error) {
     console.error('Error fetching events: ', error);
     return {};

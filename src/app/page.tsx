@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Event, speakers and their feedback',
 };
 
-export default function Page() {
+export default function HomePage() {
   return (
     <>
       <Box sx={{ mb: 2 }}>
@@ -21,14 +21,9 @@ export default function Page() {
             My Feedbacks
           </Button>
         </Link>
-        <Link href="/speakers" passHref>
+        <Link href="/organizations" passHref>
           <Button variant="contained" sx={{ mr: 1 }}>
-            Speakers
-          </Button>
-        </Link>
-        <Link href="/moderators" passHref>
-          <Button variant="contained" sx={{ mr: 1 }}>
-            Moderators
+            Organizations
           </Button>
         </Link>
       </Box>

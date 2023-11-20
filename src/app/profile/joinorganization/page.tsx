@@ -1,3 +1,4 @@
+'use server';
 import {
   Box,
   Breadcrumbs,
@@ -14,7 +15,7 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 
-import { Organizations } from '@/app/admin/organizations/page';
+import { Organizations } from '@/app/organizations/page';
 import HiddenUserIdField from '@/components/userfield';
 import { RootState } from '@/store';
 

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 import {
   Close as CloseIcon,
   Facebook as FacebookIcon,
   Google as GoogleIcon,
   Twitter as TwitterIcon,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 import {
   Alert,
   Button,
@@ -13,30 +13,30 @@ import {
   DialogTitle,
   IconButton,
   Stack,
-} from "@mui/material";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+} from '@mui/material';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   registerUserLogin,
   signInWithFacebook,
   signInWithGoogle,
   signInWithTwitter,
-} from "@/services/firebaseservice";
-import { AppDispatch } from "@/store";
-import { clearUser, setUser } from "@/store/userslice";
+} from '@/services/firebaseservice';
+import { AppDispatch } from '@/store';
+import { clearUser, setUser } from '@/store/userslice';
 
 interface LoginProps {
   title: string;
 }
 
 const Login = ({ title }: LoginProps) => {
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = searchParams?.get("pathname");
+  const pathname = searchParams?.get('pathname');
 
   const handleAuthClick =
     (authFunction: typeof signInWithFacebook) => async () => {
@@ -45,10 +45,10 @@ const Login = ({ title }: LoginProps) => {
         registerUserLogin(user);
         const token = await user.getIdToken();
 
-        const fetchResult = fetch("/api/auth", {
-          method: "POST",
+        const fetchResult = fetch('/api/auth', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
@@ -59,11 +59,12 @@ const Login = ({ title }: LoginProps) => {
             displayName: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
-          })
+            organizations: [],
+          }),
         );
 
         Promise.all([fetchResult, disptachResult]).then((values) => {
-          if ((values[0].status === 200) && pathname) {
+          if (values[0].status === 200 && pathname) {
             router.push(pathname);
           } else {
             router.back();
@@ -96,7 +97,7 @@ const Login = ({ title }: LoginProps) => {
         aria-label="close"
         onClick={() => router.back()}
         sx={{
-          position: "absolute",
+          position: 'absolute',
           right: 8,
           top: 8,
           color: (theme) => theme.palette.grey[500],
@@ -109,11 +110,11 @@ const Login = ({ title }: LoginProps) => {
           spacing={2}
           sx={{
             mb: 2,
-            margin: "auto",
-            alignItems: "start",
-            maxWidth: "fit-content",
+            margin: 'auto',
+            alignItems: 'start',
+            maxWidth: 'fit-content',
           }}
-          direction={"column"}
+          direction={'column'}
         >
           <Button
             color="inherit"

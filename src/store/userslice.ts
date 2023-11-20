@@ -1,12 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { User,UserState, UserStatus } from '@/types';
+import { User, UserState, UserStatus } from '@/types';
 
 const initialState: UserState = {
   user: null,
   status: UserStatus.IDLE,
   error: null,
+  organization: null,
 };
+
+// add redux thunk to handle async actions
+// https://redux-toolkit.js.org/tutorials/intermediate-tutorial#async-logic-and-data-fetching
+// export const fetchUser = () => async (dispatch: any) => {
+//   try {
+//     const res = await fetch('/api/user');
+//     const data = await res.json();
+//     dispatch(setUser(data));
+//   } catch (err) {
+//     dispatch(setError(err.toString()));
+//   }
+// };
 
 const userSlice = createSlice({
   name: 'user',

@@ -1,7 +1,7 @@
-import HomePage from "@/app/page";
-import LoginDialog from "@/components/login";
+import HomePage from '@/app/page';
+import LoginDialog from '@/components/login';
 
-const Page = () => {
+const SigninPage = () => {
   return (
     <>
       <HomePage />
@@ -10,4 +10,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default SigninPage;

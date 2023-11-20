@@ -14,7 +14,7 @@ export async function formSubmitAction(formData: FormData) {
   if (fileField && fileField instanceof File) {
     let stream: NodeJS.WritableStream, bob: Buffer;
 
-    const fileRef = bucket.file(`uploads/${fileField.name}`);
+    const fileRef = bucket.file(`events/${fileField.name}`);
     // const blob = await fileField.stream();
     const blob = await fileField.arrayBuffer();
     bob = Buffer.from(blob);

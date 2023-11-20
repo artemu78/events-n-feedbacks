@@ -17,7 +17,7 @@ export default function RootLayout({
   const theme = useTheme();
   const dispatch: AppDispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
-  const UserState = useSelector((state: RootState) => state.user.status);
+  const userState = useSelector((state: RootState) => state.user.status);
 
   const loginUser = (user: User) => {
     dispatch(
@@ -26,6 +26,7 @@ export default function RootLayout({
         displayName: user.name || '',
         email: user.email,
         photoURL: user.picture || '',
+        organizations: [],
       }),
     );
   };
@@ -40,8 +41,8 @@ export default function RootLayout({
 
   const [open, setOpen] = useState(matches);
   useEffect(() => {
-    if (UserState === UserStatus.IDLE) checkUserLogged();
-  }, []);
+    if (userState === UserStatus.IDLE) checkUserLogged();
+  }, [checkUserLogged, userState]);
 
   return (
     <Main open={open} setOpen={setOpen}>

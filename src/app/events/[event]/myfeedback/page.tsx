@@ -8,7 +8,11 @@ import { Feedback } from '@/types';
 
 import { getFeedbacks } from './action';
 
-const Page = async ({ params }: { params: { event: string } }) => {
+const MyEventFeedbackPage = async ({
+  params,
+}: {
+  params: { event: string };
+}) => {
   const eventId = params.event;
   const eventData = await getEventData(eventId);
   const feedbacks = (await getFeedbacks(eventId)) as Record<string, Feedback>;
@@ -52,4 +56,4 @@ const Page = async ({ params }: { params: { event: string } }) => {
   );
 };
 
-export default Page;
+export default MyEventFeedbackPage;

@@ -19,7 +19,7 @@ import HiddenUserIdField from '@/components/userfield';
 
 import { formSubmitAction } from './formaction';
 
-const Page = async ({ params }: { params: { event: string } }) => {
+const AddFeedbackPage = async ({ params }: { params: { event: string } }) => {
   const eventId = params.event;
   const eventData = await getEventData(eventId);
 
@@ -120,4 +120,4 @@ const Page = async ({ params }: { params: { event: string } }) => {
   );
 };
 
-export default Page;
+export default AddFeedbackPage;

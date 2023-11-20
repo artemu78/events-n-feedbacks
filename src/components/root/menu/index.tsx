@@ -38,14 +38,9 @@ const menuItems = [
     path: '/feedbacks',
   },
   {
-    name: 'Speakers',
-    icon: <GroupIcon />,
-    path: '/speakers',
-  },
-  {
-    name: 'Moderators',
-    icon: <InterpreterModeIcon />,
-    path: '/moderators',
+    name: 'Organizations',
+    icon: <GroupsIcon />,
+    path: '/organizations',
   },
 ];
 
@@ -59,11 +54,6 @@ const adminMenuItems = [
     name: 'Add organization',
     icon: <GroupsIcon />,
     path: '/admin/addorganization',
-  },
-  {
-    name: 'Organizations',
-    icon: <GroupsIcon />,
-    path: '/admin/organizations',
   },
 ];
 

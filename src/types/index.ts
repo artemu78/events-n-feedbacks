@@ -9,6 +9,7 @@ export interface UserState {
   user: User | null;
   status: UserStatus;
   error: string | null;
+  organization: string | null;
 }
 
 export interface User {
@@ -20,10 +21,12 @@ export interface User {
   name?: string | null;
   registerdate?: string;
   lastlogin?: string;
+  organizations: string[];
 }
 
 export interface Event {
   address: string;
+  organization: string;
   date: string;
   moderator: string;
   title: string;

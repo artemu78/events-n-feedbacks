@@ -5,6 +5,8 @@ import {
   signInWithPopup,
   signOut,
   TwitterAuthProvider,
+  User as FirebaseUser,
+  UserCredential,
 } from 'firebase/auth';
 import { get, ref, set, update } from 'firebase/database';
 
@@ -86,7 +88,7 @@ export const logout = async () => {
   }
 };
 
-export const registerUserLogin = async (user: User) => {
+export const registerUserLogin = async (user: FirebaseUser) => {
   try {
     const { uid, displayName, email, photoURL } = user;
     const userReference = ref(db, `users/${uid}`);
@@ -97,6 +99,7 @@ export const registerUserLogin = async (user: User) => {
         displayName,
         email,
         photoURL,
+        organizations: ['org1', 'org2'],
       });
     } else {
       set(userReference, {
@@ -112,3 +115,13 @@ export const registerUserLogin = async (user: User) => {
     throw error;
   }
 };
+
+export async function getSingleEntry<Entity>(
+  collection: string,
+  uid: string,
+): Promise<Entity> {
+  const userReference = ref(db, `${collection}/${uid}`);
+  const snapshot = await get(userReference);
+  const entity = snapshot.val();
+  return entity;
+}

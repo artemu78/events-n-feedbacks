@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: 'Event, speakers and their feedback',
 };
 
-const Page = () => {
+const EventsPage = () => {
   return (
     <>
       <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
@@ -28,7 +28,6 @@ const Page = () => {
         </Link>
         <Typography color="text.primary">Events</Typography>
       </Breadcrumbs>
-
       <Typography sx={{ mb: 2 }} variant="h4">
         Events
       </Typography>
@@ -84,4 +83,4 @@ const Events = async () => {
   });
 };
 
-export default Page;
+export default EventsPage;

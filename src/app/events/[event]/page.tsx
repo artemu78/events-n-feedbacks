@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 import { getEventData } from './formaction';
 
-const Page = async ({ params }: { params: { event: string } }) => {
+const EventPage = async ({ params }: { params: { event: string } }) => {
   const eventId = params.event;
   const eventData = await getEventData(eventId);
   return (
@@ -101,4 +101,4 @@ const Page = async ({ params }: { params: { event: string } }) => {
   );
 };
 
-export default Page;
+export default EventPage;

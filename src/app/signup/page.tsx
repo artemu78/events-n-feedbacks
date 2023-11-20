@@ -1,13 +1,13 @@
-import HomePage from "@/app/page";
-import LoginDialog from "@/components/login";
+import HomePage from '@/app/page';
+import LoginDialog from '@/components/login';
 
-const Page = () => {
+const SignupPage = () => {
   return (
     <>
       <HomePage />
-      <LoginDialog title="Sign up"/>
+      <LoginDialog title="Sign up" />
     </>
   );
 };
 
-export default Page;
+export default SignupPage;
