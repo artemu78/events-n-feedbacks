@@ -1,23 +1,9 @@
 'use server';
-import {
-  Box,
-  Breadcrumbs,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  Link as MUILink,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Breadcrumbs, Link as MUILink, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 
-import { Organizations } from '@/app/organizations/page';
+import OrganizationsList from '@/components/organizationslist';
 import HiddenUserIdField from '@/components/userfield';
-import { RootState } from '@/store';
 
 const JoinPage = () => {
   return (
@@ -47,7 +33,7 @@ const JoinPage = () => {
         direction="row"
         spacing={{ xs: 1, sm: 2 }}
       >
-        <Organizations />
+        <OrganizationsList />
       </Stack>
     </>
   );
