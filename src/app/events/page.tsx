@@ -1,8 +1,11 @@
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import {
+  Box,
   Breadcrumbs,
   Link as MUILink,
   Paper,
   Stack,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import type { Metadata } from 'next';
@@ -54,31 +57,48 @@ const Events = async () => {
 
   return eventsArray.map((event) => {
     return (
-      <Link key={event.id} passHref href={`/events/${event.id}`}>
-        <Paper
-          sx={{
-            width: '300px',
-            height: '300px',
-            p: 1,
-            overflow: 'hidden',
-          }}
-          component="li"
-        >
-          <Typography variant="h5">{event.title}</Typography>
-
-          <Stack spacing={1} direction={{ xs: 'column', md: 'row' }}>
-            <Typography>{event.date}</Typography>
-            <Typography variant="body2">{event.address}</Typography>
-          </Stack>
-          <Typography noWrap>{event.topic}</Typography>
-          <img
-            src={event.logoUrl}
-            alt={event.title}
-            style={{ width: '100%' }}
-          />
-          {/* <p>{event.moderator}</p> */}
-        </Paper>
-      </Link>
+      <Tooltip key={event.id} title={event.topic}>
+        <Link passHref href={`/events/${event.id}`}>
+          <Paper
+            sx={{
+              width: '300px',
+              height: '300px',
+              p: 1,
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+            component="li"
+          >
+            <Typography variant="h5">{event.title}</Typography>
+            <Stack spacing={1} direction={{ xs: 'column', md: 'row' }}>
+              <Typography>{event.date}</Typography>
+              <Typography variant="body2">{event.address}</Typography>
+            </Stack>
+            <Box>
+              <Typography noWrap>{event.topic}</Typography>
+            </Box>
+            {event.logoUrl ? (
+              <img
+                src={event.logoUrl}
+                alt={event.title}
+                style={{ width: '100%', height: 'auto' }}
+              />
+            ) : (
+              <Stack
+                justifyContent={'center'}
+                alignItems={'center'}
+                sx={{ flexGrow: 1 }}
+              >
+                <ContactSupportOutlinedIcon
+                  sx={{ fontSize: '80px', color: '#757575' }}
+                />
+              </Stack>
+            )}
+            {/* <p>{event.moderator}</p> */}
+          </Paper>
+        </Link>
+      </Tooltip>
     );
   });
 };
