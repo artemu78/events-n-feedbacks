@@ -54,8 +54,11 @@ const EventsPage = () => {
 const Events = async () => {
   const events = await getCollectionData<Event>('events');
   const eventsArray = flattenJson<Event>(events);
+  const eventsSorted = eventsArray.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
-  return eventsArray.map((event) => {
+  return eventsSorted.map((event) => {
     return (
       <Tooltip key={event.id} title={event.topic}>
         <Link passHref href={`/events/${event.id}`}>

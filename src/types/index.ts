@@ -1,18 +1,18 @@
 // types/userTypes.ts
-export enum UserStatus {
+export enum LoadStatus {
   IDLE = 'idle',
   LOADING = 'loading',
   SUCCEEDED = 'succeeded',
   FAILED = 'failed',
 }
 export interface UserState {
-  user: User | null;
-  status: UserStatus;
+  user: UserClient | null;
+  status: LoadStatus;
   error: string | null;
   organization: string | null;
 }
 
-export interface User {
+export interface UserStorage {
   uid: string;
   displayName: string | null;
   email: string | null;
@@ -22,6 +22,19 @@ export interface User {
   registerdate?: string;
   lastlogin?: string;
   organizations: string[];
+  organizationsObj: Organization[];
+}
+
+export interface UserClient {
+  uid: string;
+  displayName: string | null;
+  email: string | null;
+  photoURL: string | null;
+  picture?: string | null;
+  name?: string | null;
+  registerdate?: string;
+  lastlogin?: string;
+  organizationsObj: Organization[];
 }
 
 export interface Event {
@@ -47,10 +60,11 @@ export interface Feedback {
   improve: string;
   sender: string;
   suggestion: string;
-  user?: User;
+  user?: UserStorage;
 }
 
 export interface Organization {
+  id?: string;
   title: string;
   description: string;
   site: string;

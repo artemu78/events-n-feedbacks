@@ -3,7 +3,7 @@ import { equalTo, get, orderByChild, query, ref } from 'firebase/database';
 import { getCollectionData } from '@/services/actions';
 import { db } from '@/services/firebaseconfig';
 import { EnrichCollection } from '@/services/utils';
-import { Feedback, User } from '@/types';
+import { Feedback, UserStorage } from '@/types';
 
 export async function getFeedbacks(eventid: string) {
   try {
@@ -17,9 +17,9 @@ export async function getFeedbacks(eventid: string) {
 
     if (snapshot.exists()) {
       const feedbacks = snapshot.val() as Record<string, Feedback>;
-      const users = await getCollectionData<User>('users');
+      const users = await getCollectionData<UserStorage>('users');
 
-      const feedbacksEnriched = EnrichCollection<Feedback, User>(
+      const feedbacksEnriched = EnrichCollection<Feedback, UserStorage>(
         feedbacks,
         users,
         'createUserId',

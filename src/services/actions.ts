@@ -17,14 +17,14 @@ export async function getCollectionData<Entity>(
 
 export async function getSingleEntry<Entity>(
   collection: string,
-  eventid: string,
+  id: string,
 ): Promise<Entity | null> {
   try {
-    const snapshot = await database.ref(`${collection}/${eventid}`).get();
+    const snapshot = await database.ref(`${collection}/${id}`).get();
     const data = snapshot.val();
     return { ...data };
   } catch (error) {
-    console.error(`Error fetching ${collection} '${eventid}': `, error);
+    console.error(`Error fetching ${collection} '${id}': `, error);
     return null;
   }
 }

@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth';
 import { get, ref, set, update } from 'firebase/database';
 
-import { User } from '@/types';
+import { UserStorage } from '@/types';
 
 import { auth, db } from './firebaseconfig';
 

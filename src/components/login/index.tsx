@@ -59,7 +59,7 @@ const Login = ({ title }: LoginProps) => {
             displayName: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
-            organizations: [],
+            organizationsObj: [], // TODO: fill organizationsObj with data from firebase
           }),
         );
 

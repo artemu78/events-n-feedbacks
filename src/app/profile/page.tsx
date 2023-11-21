@@ -1,5 +1,6 @@
 'use client';
 import {
+  Avatar,
   Box,
   Breadcrumbs,
   Button,
@@ -19,6 +20,7 @@ import { useSelector } from 'react-redux';
 
 import HiddenUserIdField from '@/components/userfield';
 import { RootState } from '@/store';
+import { Organization } from '@/types';
 
 const ProfilePage = () => {
   const path = usePathname();
@@ -32,7 +34,7 @@ const ProfilePage = () => {
             Home
           </MUILink>
         </Link>
-        <Typography color="text.primary">{user?.displayName}</Typography>
+        <Typography color="text.primary">{user?.name}</Typography>
       </Breadcrumbs>
       <Typography sx={{ mb: 2 }} variant="h4">
         Profile
@@ -48,8 +50,8 @@ const ProfilePage = () => {
               fullWidth
               name="name"
               type="text"
-              label="This name will be  the website"
-              defaultValue={user?.displayName}
+              label="This name will be  the website 1"
+              value={user?.name || ''}
             />
             <TextField
               fullWidth
@@ -57,7 +59,7 @@ const ProfilePage = () => {
               label="Email"
               name="email"
               type="email"
-              defaultValue={user?.email}
+              value={user?.email || ''}
             />
 
             <FormControl variant="outlined" fullWidth>
@@ -68,8 +70,28 @@ const ProfilePage = () => {
                 fullWidth
                 name="picture"
                 type="file"
+                value={''}
               />
             </FormControl>
+            <fieldset style={{ padding: '8px' }}>
+              <legend>My organizaions</legend>
+              <Stack direction="column" spacing={2}>
+                {user?.organizationsObj?.map((organization: Organization) => (
+                  <Link
+                    key={organization.id}
+                    href={`/organizations/${organization.id}`}
+                  >
+                    <Stack direction={'row'} spacing={2} alignItems={'center'}>
+                      <Avatar
+                        alt={organization.title}
+                        src={organization.logoUrl}
+                      />
+                      <Typography>{organization.title}</Typography>
+                    </Stack>
+                  </Link>
+                ))}
+              </Stack>
+            </fieldset>
           </Paper>
           <Stack
             direction={{ xs: 'column', md: 'row' }}
@@ -81,7 +103,7 @@ const ProfilePage = () => {
             </Button>
 
             <Link href={`${path}/joinorganization`} passHref>
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" fullWidth>
                 join organization
               </Button>
             </Link>

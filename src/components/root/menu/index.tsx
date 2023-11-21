@@ -3,13 +3,14 @@ import {
   Campaign as CampaignIcon,
   ExpandLess,
   ExpandMore,
+  FactCheckOutlined as FactCheckOutlinedIcon,
   Feedback as FeedbackIcon,
   Group as GroupIcon,
   GroupAdd as GroupAddIcon,
   Groups as GroupsIcon,
 } from '@mui/icons-material';
-import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 import {
+  Avatar,
   Box,
   Divider,
   List,
@@ -24,7 +25,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
-import { UserStatus } from '@/types';
+import { LoadStatus } from '@/types';
 
 const menuItems = [
   {
@@ -58,6 +59,14 @@ const adminMenuItems = [
 ];
 
 const Menu = () => {
+  const [open, setOpen] = useState(true);
+  const organizations = useSelector(
+    (state: RootState) => state.organizations.data,
+  );
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   return (
     <List>
       {menuItems.map(({ name, icon, path }, index) => (
@@ -71,7 +80,28 @@ const Menu = () => {
         </ListItem>
       ))}
       <Divider />
-
+      <ListItem disablePadding>
+        <ListItemButton onClick={handleClick}>
+          <ListItemIcon>
+            <FactCheckOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Current organization" />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+      </ListItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="ul" sx={{ pl: 2 }} disablePadding>
+          {organizations.map(({ title, logoUrl }, index) => (
+            <ListItem key={title + index.toString()} disablePadding>
+              <ListItemButton>
+                <Avatar src={logoUrl} sx={{ mr: 1 }} />
+                <ListItemText primary={title} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Collapse>
+      <Divider />
       <AdminMenu />
     </List>
   );
@@ -85,7 +115,7 @@ const AdminMenu = () => {
   };
 
   const UserState = useSelector((state: RootState) => state.user.status);
-  if (UserState !== UserStatus.SUCCEEDED) return null;
+  if (UserState !== LoadStatus.SUCCEEDED) return null;
   return (
     <>
       <ListItem disablePadding>

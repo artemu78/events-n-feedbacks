@@ -11,7 +11,7 @@ import Menu from '@/components/root/menu';
 import CustomToolbar from '@/components/root/toolbar';
 
 import styles from './index.module.css';
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 interface IMain {
   open: boolean;

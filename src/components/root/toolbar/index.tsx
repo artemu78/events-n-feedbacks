@@ -4,6 +4,7 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   IconButton,
   Menu,
   MenuItem,
@@ -13,13 +14,13 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { logout } from '@/services/firebaseservice';
 import { RootState } from '@/store';
 import { clearUser } from '@/store/userslice';
-import { User, UserState } from '@/types';
+import { UserClient, UserState } from '@/types';
+import { LoadStatus } from '@/types';
 interface ToolbarCustomProps {
   open: boolean;
   handleDrawerOpen: () => void;
@@ -27,9 +28,24 @@ interface ToolbarCustomProps {
 
 const settings = [{ label: 'Profile', id: 'profile' }];
 type ISettingsIds = (typeof settings)[number]['id'];
-
 const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
-  const user = useSelector((state: RootState) => state.user.user);
+  const userState = useSelector((state: RootState) => state.user);
+  const user = userState.user;
+
+  let userComponent = null;
+  if (user) userComponent = <UserAvatar user={user} />;
+  else {
+    if (userState.status === LoadStatus.LOADING)
+      userComponent = <CircularProgress />;
+    else
+      userComponent = (
+        <Link href="/signin" passHref>
+          <Button color="inherit" startIcon={<LoginIcon />} sx={{ mr: 2 }}>
+            Sign In
+          </Button>
+        </Link>
+      );
+  }
   return (
     <Toolbar>
       <IconButton
@@ -41,20 +57,23 @@ const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
       >
         <MenuIcon />
       </IconButton>
-      <Link href="/" passHref style={{ flexGrow: 1 }}>
+      <Link
+        href="/"
+        passHref
+        style={{
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '8px',
+          alignItems: 'center',
+        }}
+      >
+        <img src="/logo.png" alt="logo" style={{ height: '40px' }} />
         <Typography variant="h6" noWrap component="div">
           Events and feedbacks
         </Typography>
       </Link>
-      {user ? (
-        <UserAvatar user={user} />
-      ) : (
-        <Link href="/signin" passHref>
-          <Button color="inherit" startIcon={<LoginIcon />} sx={{ mr: 2 }}>
-            Sign In
-          </Button>
-        </Link>
-      )}
+      {userComponent}
       {/* <Link href="signup" passHref>
         <Button color="inherit" startIcon={<PersonAddIcon />}>
           Sign Up
@@ -65,7 +84,7 @@ const ToolbarCustom = ({ handleDrawerOpen, open }: ToolbarCustomProps) => {
 };
 
 interface UserAvatarProps {
-  user: User;
+  user: UserClient;
 }
 
 const UserAvatar = ({ user }: UserAvatarProps) => {

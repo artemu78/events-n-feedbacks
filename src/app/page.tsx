@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -10,23 +10,23 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <Box sx={{ mb: 2 }}>
+      <Stack sx={{ mb: 2 }} spacing={2} direction={{ xs: 'column', md: 'row' }}>
         <Link href="/events" passHref>
-          <Button variant="contained" sx={{ mr: 1 }}>
+          <Button variant="contained" fullWidth>
             Events
           </Button>
         </Link>
         <Link href="/feedbacks" passHref>
-          <Button variant="contained" sx={{ mr: 1 }}>
+          <Button variant="contained" fullWidth>
             My Feedbacks
           </Button>
         </Link>
         <Link href="/organizations" passHref>
-          <Button variant="contained" sx={{ mr: 1 }}>
+          <Button variant="contained" fullWidth>
             Organizations
           </Button>
         </Link>
-      </Box>
+      </Stack>
 
       <Typography paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

@@ -1,13 +1,13 @@
 'use client';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Main from '@/components/root';
 import { AppDispatch, RootState } from '@/store';
-import { setUser } from '@/store/userslice';
-import { User, UserState, UserStatus } from '@/types';
+import { fetchUser, setUser } from '@/store/userslice';
+import { LoadStatus, UserClient, UserState, UserStorage } from '@/types';
 
 export default function RootLayout({
   children,
@@ -19,29 +19,28 @@ export default function RootLayout({
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const userState = useSelector((state: RootState) => state.user.status);
 
-  const loginUser = (user: User) => {
-    dispatch(
-      setUser({
-        uid: user.uid,
-        displayName: user.name || '',
-        email: user.email,
-        photoURL: user.picture || '',
-        organizations: [],
-      }),
-    );
-  };
+  const loginUser = useCallback(
+    (user: UserClient) => {
+      dispatch(
+        setUser({
+          uid: user.uid,
+          displayName: user.name || '',
+          email: user.email,
+          photoURL: user.picture || '',
+          organizationsObj: user.organizationsObj || {},
+        }),
+      );
+    },
+    [dispatch],
+  );
 
-  const checkUserLogged = async () => {
-    const response = await fetch('/api/auth');
-    if (response.status === 200) {
-      const user: UserState = await response.json();
-      user.user && loginUser(user?.user);
-    }
-  };
+  const checkUserLogged = useCallback(async () => {
+    dispatch(fetchUser());
+  }, [loginUser]);
 
   const [open, setOpen] = useState(matches);
   useEffect(() => {
-    if (userState === UserStatus.IDLE) checkUserLogged();
+    if (userState === LoadStatus.IDLE) checkUserLogged();
   }, [checkUserLogged, userState]);
 
   return (
