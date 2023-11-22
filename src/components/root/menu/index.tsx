@@ -61,8 +61,9 @@ const adminMenuItems = [
 const Menu = () => {
   const [open, setOpen] = useState(true);
   const organizations = useSelector(
-    (state: RootState) => state.organizations.data,
+    (state: RootState) => state.user.user?.organizationsObj,
   );
+
   const handleClick = () => {
     setOpen(!open);
   };
@@ -91,7 +92,7 @@ const Menu = () => {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="ul" sx={{ pl: 2 }} disablePadding>
-          {organizations.map(({ title, logoUrl }, index) => (
+          {organizations?.map(({ title, logoUrl }, index) => (
             <ListItem key={title + index.toString()} disablePadding>
               <ListItemButton>
                 <Avatar src={logoUrl} sx={{ mr: 1 }} />
@@ -114,8 +115,8 @@ const AdminMenu = () => {
     setOpen(!open);
   };
 
-  const UserState = useSelector((state: RootState) => state.user.status);
-  if (UserState !== LoadStatus.SUCCEEDED) return null;
+  const userState = useSelector((state: RootState) => state.user.status);
+  if (userState !== LoadStatus.SUCCEEDED) return null;
   return (
     <>
       <ListItem disablePadding>

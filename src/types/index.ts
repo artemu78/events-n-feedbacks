@@ -8,8 +8,10 @@ export enum LoadStatus {
 export interface UserState {
   user: UserClient | null;
   status: LoadStatus;
+  joinstatus: LoadStatus;
   error: string | null;
   organization: string | null;
+  joiningorganization: string;
 }
 
 export interface UserStorage {

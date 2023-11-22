@@ -1,17 +1,22 @@
 import {
+  Facebook as FacebookIcon,
+  Instagram as InstagramIcon,
+  Language as LanguageIcon,
+} from '@mui/icons-material';
+import {
   Box,
   Breadcrumbs,
   Button,
   Card,
-  CardActions,
   CardContent,
-  Grid,
+  IconButton,
   Link as MUILink,
   Stack,
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
 
+import OrganizationAction from '@/components/OrganizationActions';
 import { Organization } from '@/types';
 
 import { getOrganizationData } from './action';
@@ -40,82 +45,29 @@ const OrgPage = async ({ params }: { params: { organization: string } }) => {
         <Card sx={{ flexGrow: 1 }}>
           {/* <h1>Event: {params.event}</h1> */}
           <CardContent>
-            <Grid container spacing={2} sx={{ my: 1 }}>
-              <Grid item xs={12} sm={2}>
-                <Typography variant="body1" sx={{ color: '#757575' }}>
-                  Title
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={10}>
-                <Typography variant="body1">
-                  {organizationData?.title}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{ my: 1 }}>
-              <Grid item xs={12} sm={2}>
-                <Typography variant="body1" sx={{ color: '#757575' }}>
-                  Description
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={10}>
-                <Typography variant="body1">
-                  {organizationData?.description}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{ my: 1 }}>
-              <Grid item xs={12} sm={2}>
-                <Typography variant="body1" sx={{ color: '#757575' }}>
-                  Site
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={10}>
-                <MUILink href={organizationData?.site} target="_blank">
-                  <Typography variant="body1">
-                    {organizationData?.site}
-                  </Typography>
-                </MUILink>
-              </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{ my: 1 }}>
-              <Grid item xs={12} sm={2}>
-                <Typography variant="body1" sx={{ color: '#757575' }}>
-                  Instagram
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={10}>
-                <MUILink href={organizationData?.instagram} target="_blank">
-                  <Typography variant="body1">
-                    {organizationData?.instagram}
-                  </Typography>
-                </MUILink>
-              </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{ my: 1 }}>
-              <Grid item xs={12} sm={2}>
-                <Typography variant="body1" sx={{ color: '#757575' }}>
-                  Facebook
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={10}>
-                <MUILink href={organizationData?.facebook} target="_blank">
-                  <Typography variant="body1">
-                    {organizationData?.facebook}
-                  </Typography>
-                </MUILink>
-              </Grid>
-            </Grid>
+            <Typography variant="h5" sx={{ mb: 1 }}>
+              {organizationData?.title}
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 1 }}>
+              {organizationData?.description}
+            </Typography>
+            <MUILink href={organizationData?.site} target="_blank">
+              <IconButton>
+                <LanguageIcon />
+              </IconButton>
+            </MUILink>
+            <MUILink href={organizationData?.instagram} target="_blank">
+              <IconButton>
+                <InstagramIcon />
+              </IconButton>
+            </MUILink>
+            <MUILink href={organizationData?.facebook} target="_blank">
+              <IconButton>
+                <FacebookIcon />
+              </IconButton>
+            </MUILink>
           </CardContent>
-          <CardActions>
-            <Button>Join</Button>
-            <Link href={`/organizations/${organizationId}/members`} passHref>
-              <Button>Members</Button>
-            </Link>
-            <Link href={`/organizations/${organizationId}/events`} passHref>
-              <Button>Events</Button>
-            </Link>
-          </CardActions>
+          <OrganizationAction organizationId={organizationId} />
         </Card>
         <Box sx={{ flexShrink: 0 }} maxWidth={{ xs: '100%', md: '50%' }}>
           <img

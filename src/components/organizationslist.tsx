@@ -1,13 +1,16 @@
 'use server';
-import { Link as MUILink, Stack } from '@mui/material';
-import Link from 'next/link';
+import { Stack } from '@mui/material';
 
 import { getOrganizationsData } from '@/app/organizations/action';
 import OrganizationCard from '@/components/organizationcard';
 import { flattenJson } from '@/services/utils';
 import { Organization } from '@/types';
 
-const Organizations = async () => {
+interface OrganizationsProps {
+  joinmode?: boolean;
+}
+
+const Organizations = async ({ joinmode = false }: OrganizationsProps) => {
   const organizations = await getOrganizationsData();
   const organizationsArray = flattenJson<Organization>(organizations.data);
 
@@ -24,19 +27,14 @@ const Organizations = async () => {
     >
       {organizationsArray.map((organization) => {
         return (
-          <Link
+          <OrganizationCard
             key={organization.id}
-            passHref
-            href={`/admin/organizations/${organization.id}`}
-          >
-            <OrganizationCard
-              id={organization.id}
-              title={organization.title}
-              description={organization.description}
-              logo={organization.logoUrl}
-              key={organization.id}
-            />
-          </Link>
+            id={organization.id}
+            title={organization.title}
+            description={organization.description}
+            logo={organization.logoUrl}
+            joinmode={joinmode}
+          />
         );
       })}
     </Stack>

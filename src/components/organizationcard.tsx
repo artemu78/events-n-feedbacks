@@ -6,11 +6,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
+import OrganizationAction from '@/components/OrganizationActions';
+
 interface OrganizationCardProps {
   id: string;
   logo: string;
   title: string;
   description: string;
+  joinmode?: boolean;
 }
 
 export default async function OrganizationCard({
@@ -18,6 +21,7 @@ export default async function OrganizationCard({
   title,
   id,
   description,
+  joinmode = false,
 }: OrganizationCardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -39,21 +43,7 @@ export default async function OrganizationCard({
           </CardContent>
         </CardActionArea>
       </Link>
-      <CardActions>
-        <Button size="small" color="primary">
-          JOIN
-        </Button>
-        <Link href={`/organizations/${id}/members`} passHref>
-          <Button size="small" color="primary">
-            Members
-          </Button>
-        </Link>
-        <Link href={`/organizations/${id}/events`} passHref>
-          <Button size="small" color="primary">
-            Events
-          </Button>
-        </Link>
-      </CardActions>
+      <OrganizationAction organizationId={id} joinmode={joinmode} />
     </Card>
   );
 }

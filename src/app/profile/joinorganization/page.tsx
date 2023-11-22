@@ -33,7 +33,7 @@ const JoinPage = () => {
         direction="row"
         spacing={{ xs: 1, sm: 2 }}
       >
-        <OrganizationsList />
+        <OrganizationsList joinmode />
       </Stack>
     </>
   );
