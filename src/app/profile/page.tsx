@@ -50,7 +50,7 @@ const ProfilePage = () => {
               fullWidth
               name="name"
               type="text"
-              label="This name will be  the website 1"
+              label="This name will be  the website"
               value={user?.name || ''}
             />
             <TextField

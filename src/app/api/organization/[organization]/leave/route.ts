@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { customInitApp, database } from '@/services/firebaseadmin';
 
 export async function GET(request: NextRequest) {
-  // TODO: move code duplication to a function, see src\app\api\organization\[organization]\leave\route.ts
+  // TODO: move code duplication to a function, see src\app\api\organization\[organization]\join\route.ts
   const { url } = request;
   const organization = url.split('/')[5];
   const session = cookies().get('session')?.value || '';
@@ -25,10 +25,13 @@ export async function GET(request: NextRequest) {
   const snapshot = await database.ref(`users/${decodedClaims.uid}`);
   const userSnapshot = await snapshot.get();
   const userFromStorage = userSnapshot.val();
+
   if (Array.isArray(userFromStorage.organizations)) {
-    userFromStorage.organizations.push(organization);
-  } else {
-    userFromStorage.organizations = [organization];
+    // find and remove element organization from array userFromStorage.organizations
+    const index = userFromStorage.organizations.indexOf(organization);
+    if (index > -1) {
+      userFromStorage.organizations.splice(index, 1);
+    }
   }
   snapshot.set(userFromStorage);
 

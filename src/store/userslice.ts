@@ -27,6 +27,10 @@ export const joinOrganization = createAsyncThunk<
   const response = await fetch(`/api/organization/${organizationId}/join`, {
     credentials: 'include',
   });
+  if (!response.ok) {
+    // Return the error message thunkAPI.rejectWithValue
+    return thunkAPI.rejectWithValue('Failed to join organization');
+  }
   // send organization to reducer
   organization && thunkAPI.dispatch(addOrganization(organization));
   return {};
@@ -37,14 +41,15 @@ export const leaveOrganization = createAsyncThunk<
   string,
   { rejectValue: string }
 >('users/leaveOrganization', async (organizationId: string, thunkAPI) => {
-  const organization = (
-    thunkAPI.getState() as RootState
-  ).organizations.data.find((org) => org.id === organizationId);
   const response = await fetch(`/api/organization/${organizationId}/leave`, {
     credentials: 'include',
   });
+  if (!response.ok) {
+    // Return the error message thunkAPI.rejectWithValue
+    return thunkAPI.rejectWithValue('Failed to join organization');
+  }
   // send organization to reducer
-  thunkAPI.dispatch(setOrganizations([organization as Organization]));
+  thunkAPI.dispatch(removeOrganization(organizationId));
   return {};
 });
 
@@ -82,6 +87,14 @@ const userSlice = createSlice({
     addOrganization: (state, action: PayloadAction<Organization>) => {
       state.user?.organizationsObj.push(action.payload);
     },
+    removeOrganization: (state, action: PayloadAction<string>) => {
+      const index = state.user?.organizationsObj.findIndex(
+        (org) => org.id === action.payload,
+      );
+      if (index !== undefined && index !== -1) {
+        state.user?.organizationsObj.splice(index, 1);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(joinOrganization.pending, (state, action) => {
@@ -98,9 +111,28 @@ const userSlice = createSlice({
       state.joinstatus = LoadStatus.FAILED;
       state.error = action.payload || 'Failed to join organization';
     });
+    builder.addCase(leaveOrganization.pending, (state, action) => {
+      state.joiningorganization = action.meta.arg;
+      state.joinstatus = LoadStatus.LOADING;
+    });
+    builder.addCase(leaveOrganization.fulfilled, (state) => {
+      state.joiningorganization = '';
+      state.joinstatus = LoadStatus.SUCCEEDED;
+    });
+    builder.addCase(leaveOrganization.rejected, (state, action) => {
+      state.joiningorganization = '';
+      state.joinstatus = LoadStatus.FAILED;
+      state.error = action.payload || 'Failed to leave organization';
+    });
   },
 });
 
-export const { setUser, clearUser, setStatus, setError, addOrganization } =
-  userSlice.actions;
+export const {
+  setUser,
+  clearUser,
+  setStatus,
+  setError,
+  addOrganization,
+  removeOrganization,
+} = userSlice.actions;
 export default userSlice.reducer;

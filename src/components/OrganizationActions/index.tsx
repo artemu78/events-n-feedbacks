@@ -27,12 +27,11 @@ const OrganizationActions = ({
   }
 
   const joinOrganizationHandle = async () => {
-    const result = await dispatch(joinOrganization(organizationId));
+    dispatch(joinOrganization(organizationId));
   };
 
   const leaveOrganizationHandle = async () => {
-    console.log('Not ready yet');
-    // const result = await dispatch(leaveOrganization(organizationId));
+    dispatch(leaveOrganization(organizationId));
   };
 
   const userHasThisOrganization = user.organizationsObj.find((organization) => {
@@ -70,9 +69,9 @@ const OrganizationActions = ({
         direction={'row'}
       >
         {userHasThisOrganization ? (
-          <Button onClick={joinOrganizationHandle}>Leave</Button>
+          <Button onClick={leaveOrganizationHandle}>Leave</Button>
         ) : (
-          <Button onClick={leaveOrganizationHandle}>Join</Button>
+          <Button onClick={joinOrganizationHandle}>Join</Button>
         )}
         <Link href={`/organizations/${organizationId}/members`} passHref>
           <Button>Members</Button>
