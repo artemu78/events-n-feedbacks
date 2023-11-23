@@ -1,3 +1,9 @@
+'use client';
+import { useWhisper } from '@kkaczynski/use-whisper';
+import {
+  KeyboardVoice as KeyboardVoiceIcon,
+  StopCircle as StopCircleIcon,
+} from '@mui/icons-material';
 import {
   Breadcrumbs,
   Button,
@@ -5,23 +11,47 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   InputLabel,
   Link as MUILink,
   Paper,
+  Stack,
   Switch,
   TextField,
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import { getEventData } from '@/app/events/[event]/formaction';
 import HiddenUserIdField from '@/components/userfield';
 
 import { formSubmitAction } from './formaction';
 
-const AddFeedbackPage = async ({ params }: { params: { event: string } }) => {
+const AddFeedbackPage = ({ params }: { params: { event: string } }) => {
+  const [recordingState, setRecording] = useState(false);
+  const {
+    recording,
+    speaking,
+    transcribing,
+    transcript,
+    pauseRecording,
+    startRecording,
+    stopRecording,
+  } = useWhisper({
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_TOKEN,
+  });
   const eventId = params.event;
-  const eventData = await getEventData(eventId);
+  // const eventData = await getEventData(eventId);
+
+  const handleRecord = () => {
+    if (recordingState) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+    setRecording(!recordingState);
+  };
 
   return (
     <Container component="main" sx={{ width: '100%' }}>
@@ -38,15 +68,25 @@ const AddFeedbackPage = async ({ params }: { params: { event: string } }) => {
         </Link>
         <Link href={`/events/${eventId}`} passHref>
           <MUILink component="span" underline="hover" color="inherit">
-            {eventData?.date}
+            {/* {eventData?.date} */} fake date
           </MUILink>
         </Link>
         <Typography color="text.primary">Add feedback</Typography>
       </Breadcrumbs>
 
-      <Typography component="h1" variant="h5">
-        Add new feedback
-      </Typography>
+      <Stack
+        direction="row"
+        alignItems={'center'}
+        justifyContent={'space-between'}
+      >
+        <Typography component="h1" variant="h5">
+          Add new feedback
+        </Typography>
+        <IconButton onClick={handleRecord}>
+          {recordingState ? <StopCircleIcon /> : <KeyboardVoiceIcon />}
+        </IconButton>
+      </Stack>
+
       <form action={formSubmitAction}>
         <HiddenUserIdField />
         <TextField
@@ -101,6 +141,7 @@ const AddFeedbackPage = async ({ params }: { params: { event: string } }) => {
           fullWidth
           name="suggestion"
           type="text"
+          value={transcript.text || ''}
         />
         <FormControlLabel
           control={<Switch name="anonymous" id="anonymous" value={true} />}

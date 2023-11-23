@@ -76,7 +76,7 @@ const EventPage = async ({ params }: { params: { event: string } }) => {
         <Box sx={{ flexShrink: 0 }} maxWidth={{ xs: '100%', md: '50%' }}>
           <img
             src={eventData?.logoUrl}
-            style={{ width: '100%', height: 'auto' }}
+            style={{ width: '100%', height: 'auto', borderRadius: '5px' }}
           />
         </Box>
       </Stack>
