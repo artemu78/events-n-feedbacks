@@ -11,7 +11,7 @@ export async function formSubmitAction(formData: FormData) {
 
   const fileField = formData.get('logo');
 
-  if (fileField && fileField instanceof File) {
+  if (fileField && fileField instanceof File && fileField.size > 0) {
     let stream: NodeJS.WritableStream, bob: Buffer;
 
     const fileRef = bucket.file(`events/${fileField.name}`);
@@ -37,6 +37,8 @@ export async function formSubmitAction(formData: FormData) {
     });
 
     stream?.end(bob);
+  } else {
+    await addEvent(formData, logoUrl);
   }
   return true;
 }
@@ -53,7 +55,7 @@ async function addEvent(formData: FormData, logoUrl: string) {
     topic: formData.get('topic'),
     createDateTime: new Date().toISOString(),
     createUserId: formData.get('userId'),
-    logoUrl,
+    logoUrl: logoUrl || formData.get('dallePictureUrl'),
   });
   // get the key of the new event
   newEventKey = result.key;

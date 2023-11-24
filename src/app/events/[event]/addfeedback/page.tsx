@@ -7,14 +7,11 @@ import {
 import {
   Breadcrumbs,
   Button,
+  CircularProgress,
   Container,
-  FormControl,
   FormControlLabel,
-  Grid,
   IconButton,
-  InputLabel,
   Link as MUILink,
-  Paper,
   Stack,
   Switch,
   TextField,
@@ -23,13 +20,13 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { getEventData } from '@/app/events/[event]/formaction';
 import HiddenUserIdField from '@/components/userfield';
 
 import { formSubmitAction } from './formaction';
 
 const AddFeedbackPage = ({ params }: { params: { event: string } }) => {
-  const [recordingState, setRecording] = useState(false);
+  const [suggestions, setSuggestions] = useState('');
+
   const {
     recording,
     speaking,
@@ -45,13 +42,17 @@ const AddFeedbackPage = ({ params }: { params: { event: string } }) => {
   // const eventData = await getEventData(eventId);
 
   const handleRecord = () => {
-    if (recordingState) {
+    if (recording) {
       stopRecording();
     } else {
       startRecording();
     }
-    setRecording(!recordingState);
   };
+
+  // useEffect(() => {
+  //   console.log('adding suggestion', transcript.text, 'to', suggestions);
+  //   setSuggestions(suggestions + '\n' + transcript.text);
+  // }, [transcript.text || '', suggestions]);
 
   return (
     <Container component="main" sx={{ width: '100%' }}>
@@ -71,7 +72,7 @@ const AddFeedbackPage = ({ params }: { params: { event: string } }) => {
             {/* {eventData?.date} */} fake date
           </MUILink>
         </Link>
-        <Typography color="text.primary">Add feedback</Typography>
+        <Typography color="text.primary">Add feedback 1</Typography>
       </Breadcrumbs>
 
       <Stack
@@ -83,7 +84,13 @@ const AddFeedbackPage = ({ params }: { params: { event: string } }) => {
           Add new feedback
         </Typography>
         <IconButton onClick={handleRecord}>
-          {recordingState ? <StopCircleIcon /> : <KeyboardVoiceIcon />}
+          {recording ? (
+            <StopCircleIcon />
+          ) : transcribing ? (
+            <CircularProgress />
+          ) : (
+            <KeyboardVoiceIcon />
+          )}
         </IconButton>
       </Stack>
 
@@ -141,7 +148,9 @@ const AddFeedbackPage = ({ params }: { params: { event: string } }) => {
           fullWidth
           name="suggestion"
           type="text"
-          value={transcript.text || ''}
+          // onChange={(e) => setSuggestions(e.target.value)}
+          value={transcript.text}
+          defaultValue={''}
         />
         <FormControlLabel
           control={<Switch name="anonymous" id="anonymous" value={true} />}

@@ -3,6 +3,7 @@ import {
   Container,
   FormControl,
   InputLabel,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -11,6 +12,7 @@ import React from 'react';
 import HiddenUserIdField from '@/components/userfield';
 
 import { formSubmitAction } from './formaction';
+import Topic from './topic';
 
 const EventForm = () => {
   return (
@@ -42,18 +44,7 @@ const EventForm = () => {
           type="text"
         />
 
-        <TextField
-          label="Topic"
-          id="topic"
-          variant="outlined"
-          margin="normal"
-          multiline
-          rows={4}
-          fullWidth
-          name="topic"
-          type="text"
-        />
-
+        <Topic />
         <FormControl variant="outlined" fullWidth>
           <InputLabel htmlFor="eventDate">Logo</InputLabel>
           <TextField
