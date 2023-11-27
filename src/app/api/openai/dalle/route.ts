@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 import { authorize, isDecodedClaims } from '@/app/api/authorize';
+export const runtime = 'edge';
 
 export async function POST(request: NextRequest, response: NextResponse) {
   const decodedClaims = await authorize();
