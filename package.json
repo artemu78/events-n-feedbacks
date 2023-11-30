@@ -42,6 +42,6 @@
     "typescript-coverage-report": "^0.8.0"
   },
   "workspaces": [
-    "functions/*"
+    "firefunctions/*"
   ]
 }
