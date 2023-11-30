@@ -81,7 +81,9 @@ export const signInWithTwitter = async () => {
 
 export const logout = async () => {
   try {
-    await signOut(auth);
+    const killCookie = fetch('/api/logout');
+    const firebaseSignout = signOut(auth);
+    Promise.all([killCookie, firebaseSignout]);
   } catch (error) {
     console.error('Logout failed:', error);
     throw error;

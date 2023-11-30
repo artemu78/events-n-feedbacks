@@ -45,13 +45,25 @@ const Login = ({ title }: LoginProps) => {
         registerUserLogin(user);
         const token = await user.getIdToken();
 
-        const fetchResult = fetch('/api/auth', {
+        const coreAuthorizeResult = fetch('/api/auth', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
+
+        const firebaseAuthorizeResult = fetch(
+          'https://setauthorizationcookie-3pbyh7jzyq-lz.a.run.app',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: 'include',
+          },
+        );
 
         const disptachResult = dispatch(
           setUser({
@@ -63,7 +75,11 @@ const Login = ({ title }: LoginProps) => {
           }),
         );
 
-        Promise.all([fetchResult, disptachResult]).then((values) => {
+        Promise.all([
+          coreAuthorizeResult,
+          firebaseAuthorizeResult,
+          disptachResult,
+        ]).then((values) => {
           if (values[0].status === 200 && pathname) {
             router.push(pathname);
           } else {

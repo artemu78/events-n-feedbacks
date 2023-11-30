@@ -98,7 +98,6 @@ const UserAvatar = ({ user }: UserAvatarProps) => {
   const handleCloseUserMenu = (menuItem: ISettingsIds) => async () => {
     if (menuItem === 'logout') {
       await logout();
-      document.cookie = 'session=;path=/;max-age=0;';
       dispatch(clearUser());
     }
     setAnchorElUser(null);

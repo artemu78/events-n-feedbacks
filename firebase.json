@@ -9,7 +9,10 @@
         "firebase-debug.log",
         "firebase-debug.*.log"
       ],
-      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"],
+      "predeploy": [
+        "yarn --cwd \"$RESOURCE_DIR\" version --patch --no-git-tag-version",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
       "runtime": "nodejs18"
     }
   ]

@@ -15,6 +15,8 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
+const generateUrl = 'https://dallegenerate-3pbyh7jzyq-lz.a.run.app';
+
 const Topic = () => {
   const [topic, setTopic] = React.useState('');
   const [imageUrl, setImageUrl] = React.useState('');
@@ -22,12 +24,19 @@ const Topic = () => {
 
   const handleClicked = async () => {
     setImageLoading(true);
-    const response = await fetch('/api/openai/dalle', {
-      method: 'POST',
-      body: JSON.stringify({ prompt: topic }),
-    });
-    const image = await response.json();
-    setImageLoading(false);
+    let image = { url: '' };
+    try {
+      const response = await fetch(generateUrl, {
+        method: 'POST',
+        body: JSON.stringify({ prompt: topic }),
+        credentials: 'include',
+      });
+      image = await response.json();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setImageLoading(false);
+    }
     image.url && setImageUrl(image.url);
   };
 
