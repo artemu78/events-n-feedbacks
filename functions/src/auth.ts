@@ -41,6 +41,8 @@ export const setSimpleCookie = onRequest(
   functionParams,
   async (request: functions.https.Request, response: functions.Response) => {
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
+    //get header Origin from request
+    const origin = request.headers.origin;
 
     response.cookie(COOKIE_NAME, 'fakevalue', {
       maxAge: expiresIn,
@@ -49,7 +51,7 @@ export const setSimpleCookie = onRequest(
       secure: true,
     });
     response.set('access-control-expose-headers', 'set-cookie');
-    response.set('access-control-allow-origin', 'http://localhost:3000');
+    response.set('access-control-allow-origin', origin);
     response.set('Access-Control-Allow-Credentials', 'true');
 
     response.status(200).send('cookie set');

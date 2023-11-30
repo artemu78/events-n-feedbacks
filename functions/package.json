@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "scripts": {
     "lint": "echo 'fake lint command'",
     "build": "tsc",
