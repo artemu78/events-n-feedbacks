@@ -40,5 +40,8 @@
     "prettier": "^3.1.0",
     "typescript": "^5",
     "typescript-coverage-report": "^0.8.0"
-  }
+  },
+  "workspaces": [
+    "functions/*"
+  ]
 }
