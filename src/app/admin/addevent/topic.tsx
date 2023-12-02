@@ -15,7 +15,8 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 
-const generateUrl = 'https://dallegenerate-3pbyh7jzyq-lz.a.run.app';
+const generateUrl =
+  'https://us-central1-events-n-feedbacks.cloudfunctions.net/dallegenerate';
 
 const Topic = () => {
   const [topic, setTopic] = React.useState('');

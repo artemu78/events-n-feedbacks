@@ -54,7 +54,7 @@ const Login = ({ title }: LoginProps) => {
         });
 
         const firebaseAuthorizeResult = fetch(
-          'https://setauthorizationcookie-3pbyh7jzyq-lz.a.run.app',
+          'https://us-central1-events-n-feedbacks.cloudfunctions.net/setAuthorizationCookie',
           {
             method: 'POST',
             headers: {

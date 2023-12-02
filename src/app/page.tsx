@@ -2,8 +2,6 @@ import { Button, Stack, Typography } from '@mui/material';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import { Test } from '@/components/test';
-
 export const metadata: Metadata = {
   title: "Events'n'Feedback",
   description: 'Event, speakers and their feedback',
@@ -28,7 +26,6 @@ export default function HomePage() {
             Organizations
           </Button>
         </Link>
-        <Test />
       </Stack>
 
       <Typography paragraph>
